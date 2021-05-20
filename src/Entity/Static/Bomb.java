@@ -17,10 +17,6 @@ public class Bomb extends StaticEntity {
     private long droppedTime;
     //炸彈威力
     private int power;
-    //垂直爆炸
-    private VerticalExplosion vertical;
-    //水平爆炸
-    private HorizontalExplosion horizontal;
 
     public Bomb(Handler handler, Player player, int power) {
         super(handler, player.getPosition().x, player.getPosition().y, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
@@ -38,10 +34,6 @@ public class Bomb extends StaticEntity {
 
         //設定炸彈數值
         this.power = power;
-
-        //設定爆炸數值
-        vertical = new VerticalExplosion(handler, this);
-        horizontal = new HorizontalExplosion(handler, this);
     }
 
     @Override
@@ -55,27 +47,23 @@ public class Bomb extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        if(!destroyed) {
-            graphics.drawImage(AssetManager.stone, (int)position.x, (int)position.y,
-                    Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
-            graphics.setColor(Color.RED);
-            //center of bomb
-            graphics.fillRect((int)(position.x + Tile.TILE_WIDTH / 2 - 4),
-                    (int)(position.y + Tile.TILE_HEIGHT / 2 - 4), 10, 10);
-            graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y),
-                    boundingRect.width, boundingRect.height);
-            //vertical.render(graphics);
-            horizontal.render(graphics);
-        }
+        graphics.drawImage(AssetManager.stone, (int)position.x, (int)position.y,
+                Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
+        graphics.setColor(Color.RED);
+        //center of bomb
+        /*graphics.fillRect((int)(position.x + Tile.TILE_WIDTH / 2 - 4),
+                (int)(position.y + Tile.TILE_HEIGHT / 2 - 4), 10, 10);*/
+        graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y),
+                boundingRect.width, boundingRect.height);
     }
 
     private void explode() {
         //System.out.println("Bom!!!");
         if(!destroyed) {
-            vertical = new VerticalExplosion(handler, this);
-            horizontal = new HorizontalExplosion(handler, this);
-            vertical.explode();
-            horizontal.explode();
+            //水平爆炸
+            handler.getMap().getEntityManager().addExplosion(new Explosion.HorizontalExplosion(handler, this));
+            //垂直爆炸
+            handler.getMap().getEntityManager().addExplosion(new Explosion.VerticalExplosion(handler, this));
             player.restoreAmmo();
             destroyed = true;
         }
@@ -118,5 +106,9 @@ public class Bomb extends StaticEntity {
 
     public long getTimer() {
         return timer;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

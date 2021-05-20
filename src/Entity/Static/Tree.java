@@ -31,6 +31,6 @@ public class Tree extends StaticEntity {
 
     @Override
     public boolean isBreakable() {
-        return true;
+        return false;
     }
 }

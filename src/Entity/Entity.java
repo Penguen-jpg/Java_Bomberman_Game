@@ -47,7 +47,6 @@ public abstract class Entity {
                 return true;
             }
         }
-
         return false;
     }
 

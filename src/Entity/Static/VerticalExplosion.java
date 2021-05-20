@@ -35,16 +35,4 @@ public class VerticalExplosion extends StaticEntity {
     public void explode() {
 
     }
-
-    /*private boolean checkVerticalExplosion(float x, float y) {
-        float value = y;
-
-        for(int n=-1 * range;n<=range;n++) {
-            value  += Tile.TILE_HEIGHT;
-        }
-
-        for(int n=0;n<handler.getMap().getEntityManager().getEntities().size();n++) {
-
-        }
-    }*/
 }
