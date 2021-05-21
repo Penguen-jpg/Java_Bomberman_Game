@@ -45,8 +45,8 @@ public class Player extends Creature {
         rightAnimation = new Animation(500, assets[3]);
 
         //設定炸彈數值
-        power = 2;
-        maxAmmo = 2;
+        power = 1;
+        maxAmmo = 1;
         ammo = maxAmmo;
 
         //設定檢查用變數

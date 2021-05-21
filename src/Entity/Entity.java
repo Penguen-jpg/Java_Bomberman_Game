@@ -38,7 +38,7 @@ public abstract class Entity {
         //檢查entity之間的碰撞
         for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
             //不檢查自己
-            if(entity.equals(this)) {
+            if(entity.destroyed || entity.equals(this)) {
                 continue;
             }
 

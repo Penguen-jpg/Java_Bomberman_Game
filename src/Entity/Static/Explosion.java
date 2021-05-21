@@ -89,7 +89,7 @@ public abstract class Explosion extends StaticEntity {
             }
 
             boundingRect.width = Tile.TILE_WIDTH * waveRange;
-            graphics.drawImage(AssetManager.stone, startX,
+            graphics.drawImage(AssetManager.unbreakableBox1, startX,
                     (int)position.y, boundingRect.width,
                     Tile.TILE_HEIGHT, null);
             graphics.setColor(Color.BLUE);
@@ -193,7 +193,7 @@ public abstract class Explosion extends StaticEntity {
             }
 
             boundingRect.height = Tile.TILE_HEIGHT * waveRange;
-            graphics.drawImage(AssetManager.stone, (int)position.x,
+            graphics.drawImage(AssetManager.unbreakableBox2, (int)position.x,
                     startY, boundingRect.width,
                     boundingRect.height, null);
             graphics.setColor(Color.BLUE);

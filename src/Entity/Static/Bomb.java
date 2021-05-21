@@ -47,7 +47,7 @@ public class Bomb extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(AssetManager.stone, (int)position.x, (int)position.y,
+        graphics.drawImage(AssetManager.unbreakableBox2, (int)position.x, (int)position.y,
                 Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
         graphics.setColor(Color.RED);
         //center of bomb
@@ -74,7 +74,7 @@ public class Bomb extends StaticEntity {
         //檢查與entity的碰撞
         for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
             //不檢查要放下的玩家
-            if(entity.equals(player)) {
+            if(entity.isDestroyed() || entity.equals(player)) {
                 continue;
             }
 

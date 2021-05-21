@@ -2,7 +2,7 @@ package Maps;
 
 import Entity.Creature.Player;
 import Entity.EntityManager;
-import Entity.Static.Tree;
+import Entity.Static.BreakableBox;
 import Texture.Tile;
 import Utility.Handler;
 import Utility.Helper;
@@ -25,11 +25,9 @@ public class Map {
                 new Player(handler, 0.0f, 0.0f, handler.getKeyboardManager(0), AssetManager.player1Animation),
                 new Player(handler, 200.0f, 0.0f, handler.getKeyboardManager(1), AssetManager.player1Animation));
         entityManager.getPlayer1().setPosition(spawnX, spawnY);
-        entityManager.addEntity(new Tree(handler, 100.0f, 200.0f));
-        entityManager.addEntity(new Tree(handler, 100.0f, 300.0f));
-        entityManager.addEntity(new Tree(handler, 100.0f, 400.0f));
-        entityManager.addEntity(new Tree(handler, 300.0f, 200.0f));
-
+        entityManager.addEntity(new BreakableBox(handler, 150.0f, 150.0f));
+        entityManager.addEntity(new BreakableBox(handler, 300.0f, 150.0f));
+        entityManager.addEntity(new BreakableBox(handler, 450.0f, 150.0f));
     }
 
     private void loadMap(String path) {
@@ -65,11 +63,11 @@ public class Map {
     //getters
     public Tile getTile(int x, int y) {
         if(x < 0 || y < 0 || x >= width || y >= height)
-            return Tile.grassTile;
+            return Tile.floorTile4;
 
         Tile tile = Tile.tiles[tileTypes[x][y]];
         if(tile == null) {
-            return Tile.dirtTile;
+            return Tile.floorTile1;
         }
         return tile;
     }
