@@ -1,5 +1,6 @@
 package Entity.Static;
 
+import Entity.Creature.Player;
 import Entity.Entity;
 import Texture.Tile;
 import Utility.Handler;
@@ -15,9 +16,12 @@ public abstract class Explosion extends StaticEntity {
     protected Bomb bomb;
     //最大爆炸範圍
     protected int maxRange;
+    //渲染用的bounding box
+    protected Rectangle drawRect;
 
     public Explosion(Handler handler, Bomb bomb) {
-        super(handler, bomb.getPosition().x, bomb.getPosition().y, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+        super(handler, bomb.getGridX() * Tile.TILE_WIDTH
+                , bomb.getGridY() * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
         this.bomb = bomb;
 
         //設定爆炸數值
@@ -25,6 +29,22 @@ public abstract class Explosion extends StaticEntity {
 
         //紀錄引爆的時間
         detonateTime = System.currentTimeMillis();
+
+        //初始化drawRect
+        drawRect = new Rectangle(0, 0, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+    }
+
+    //檢查與tile的碰撞
+    protected boolean hasCollisionWithTile(int x, int y) {
+        return handler.getMap().getTile(x, y).isSolid();
+    }
+
+    @Override
+    public Rectangle getCollisionRect(float xOffset, float yOffset) {
+        //System.out.println((int)(position.x + boundingRect.x + xOffset) + "  " + (int)(position.y + boundingRect.y + yOffset));
+
+        return new Rectangle((int)(position.x + boundingRect.x + xOffset),
+                (int)(position.y + boundingRect.y + yOffset), boundingRect.width, boundingRect.height);
     }
 
     //水平的爆炸
@@ -33,10 +53,10 @@ public abstract class Explosion extends StaticEntity {
             super(handler, bomb);
 
             //設定bounding box
-            boundingRect.x = (Tile.TILE_WIDTH * bomb.getPower()) * -1;
-            boundingRect.y = 0;
-            boundingRect.width = 0;
-            boundingRect.height = Tile.TILE_HEIGHT;
+            drawRect.x = 0;
+            drawRect.y = 0;
+            drawRect.width = Tile.TILE_WIDTH;
+            drawRect.height = Tile.TILE_HEIGHT;
         }
 
         @Override
@@ -49,77 +69,65 @@ public abstract class Explosion extends StaticEntity {
 
         @Override
         public void render(Graphics graphics) {
-            //爆炸的起始x座標
-            int startX = (int)(position.x + boundingRect.x);
-            //爆炸的頂端y座標
-            int upperY = (int)((position.y + boundingRect.y) / Tile.TILE_HEIGHT);
-            //爆炸的底端y座標
-            int lowerY = (int)((position.y + boundingRect.y + boundingRect.height) / Tile.TILE_HEIGHT);
-            //暫存原本boundingRect.x
-            int temp = boundingRect.x;
             //最終爆炸範圍
-            int waveRange = 0;
+            int waveRange = 1;
 
             //算出左半邊爆炸範圍
-            for(int n=0;n<maxRange/2;n++) {
-                //檢查是否碰撞到solid tile和unbreakable entity
-                if(hasCollisionWithEntity() || hasCollisionWithTile(startX / Tile.TILE_WIDTH, upperY)
-                        || hasCollisionWithTile(startX / Tile.TILE_WIDTH, lowerY)) {
-                    startX += Tile.TILE_WIDTH;
-                    boundingRect.x += Tile.TILE_WIDTH;
-                    //boundingRect.width -= Tile.TILE_WIDTH;
-                    //waveRange--;
-                }else {
-                    waveRange++;
-                }
-            }
-
-            //爆炸的底部x座標
-            int endX = startX;
-            //算出右半邊爆炸範圍
-            for(int n=maxRange/2;n<maxRange;n++) {
-                if(hasCollisionWithTile(endX / Tile.TILE_WIDTH, upperY)
-                        || hasCollisionWithTile(endX / Tile.TILE_WIDTH, lowerY)) {
+            for(int n=1;n<=maxRange/2;n++) {
+                if(hasCollisionWithEntity((gridX - n) * Tile.TILE_WIDTH)
+                        || hasCollisionWithTile(bomb.gridX - n, bomb.gridY)) {
                     break;
                 }else {
-                    //boundingRect.width += Tile.TILE_WIDTH;
+                    //往左延伸
                     waveRange++;
-                    endX += Tile.TILE_WIDTH;
+                    drawRect.x -= Tile.TILE_WIDTH;
                 }
             }
 
-            boundingRect.width = Tile.TILE_WIDTH * waveRange;
-            graphics.drawImage(AssetManager.unbreakableBox1, startX,
-                    (int)position.y, boundingRect.width,
-                    Tile.TILE_HEIGHT, null);
-            graphics.setColor(Color.BLUE);
-            graphics.fillRect(startX, (int)(position.y + boundingRect.y),
-                    boundingRect.width, boundingRect.height);
-            boundingRect.x = temp;
-        }
+            //算出右半邊爆炸範圍
+            for(int n=1;n<=maxRange/2;n++) {
+                if(hasCollisionWithEntity((gridX + n) * Tile.TILE_WIDTH)
+                        || hasCollisionWithTile(bomb.getGridX() + n, bomb.getGridY())) {
+                    break;
+                }else {
+                    //往右延伸
+                    waveRange++;
+                }
+            }
 
-        //檢查與tile的碰撞
-        private boolean hasCollisionWithTile(int x, int y) {
-            return handler.getMap().getTile(x, y).isSolid();
+            drawRect.width = Tile.TILE_WIDTH * waveRange;
+            graphics.setColor(Color.BLUE);
+            graphics.fillRect((int)(position.x + drawRect.x), (int)(position.y + drawRect.y)
+                    , drawRect.width, drawRect.height);
+
+            //設定判斷用的bounding box
+            boundingRect.x = drawRect.x;
+            boundingRect.y = drawRect.y;
+            boundingRect.width = drawRect.width;
+            boundingRect.height = drawRect.height;
+
+            //歸0
+            drawRect.x = 0;
         }
 
         //檢查與entity的碰撞
-        private boolean hasCollisionWithEntity() {
+        private boolean hasCollisionWithEntity(int x){
             for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
-                if(!entity.isDestroyed()
-                        && entity.getCollisionRect(0.0f, 0.0f)
-                        .intersects(getCollisionRect(0.0f, 0.0f))) {
+                if (!entity.isDestroyed()
+                        && (entity.getCollisionRect(0.0f, 0.0f).contains(x, position.y))) {
                     //debug用
                     /*if(entity.equals(bomb.getPlayer())) {
                         continue;
                     }*/
+                    /*Rectangle temp = getCollisionRect(xOffset, 0.0f);
+                    System.out.println("Rect now:"+"x:"+temp.x+" y:"+temp.y
+                            +" w:"+temp.width+" h:"+temp.height);*/
                     //如果該entity可破壞，則不須削減爆炸範圍
-                    if(entity.isBreakable()) {
-                        System.out.println(entity.getClass());
+                    if (entity.isBreakable()) {
+                        //System.out.println("nowX:"+(boundingRect.x+Tile.TILE_WIDTH));
                         entity.setDestroyed(true);
                         return false;
-                    }else
-                    {
+                    } else {
                         System.out.println("Collide with unbreakable entity");
                         return true;
                     }
@@ -129,16 +137,18 @@ public abstract class Explosion extends StaticEntity {
         }
     }
 
+
+
     //垂直的爆炸
     public static class VerticalExplosion extends Explosion {
         public VerticalExplosion(Handler handler, Bomb bomb) {
             super(handler, bomb);
 
             //設定bounding box
-            boundingRect.x = 0;
-            boundingRect.y = (Tile.TILE_HEIGHT * bomb.getPower()) * -1;
-            boundingRect.width = Tile.TILE_WIDTH;
-            boundingRect.height = 0;
+            drawRect.x = 0;
+            drawRect.y = 0;
+            drawRect.width = Tile.TILE_WIDTH;
+            drawRect.height = Tile.TILE_HEIGHT;
         }
 
 
@@ -152,74 +162,57 @@ public abstract class Explosion extends StaticEntity {
 
         @Override
         public void render(Graphics graphics) {
-            //爆炸的起始y座標
-            int startY = (int)(position.y + boundingRect.y);
-            //爆炸的左邊x座標
-            int leftX = (int)((position.x + boundingRect.x) / Tile.TILE_WIDTH);
-            //爆炸的右邊x座標
-            int rightX = (int)((position.x + boundingRect.x + boundingRect.width) / Tile.TILE_WIDTH);
-            //暫存原本boundingRect.y
-            int temp = boundingRect.y;
             //最終爆炸範圍
-            int waveRange = 0;
+            int waveRange = 1;
 
             //算出上半邊爆炸範圍
-            for(int n=0;n<maxRange/2;n++) {
-                //檢查是否碰撞到solid tile和unbreakable entity
-                if(hasCollisionWithTile(leftX, startY / Tile.TILE_HEIGHT)
-                        || hasCollisionWithTile(rightX, startY / Tile.TILE_HEIGHT)) {
-                    startY += Tile.TILE_HEIGHT;
-                    boundingRect.y += Tile.TILE_HEIGHT;
-                    //boundingRect.width -= Tile.TILE_WIDTH;
-                    //waveRange--;
+            for(int n=1;n<=maxRange/2;n++) {
+                if(hasCollisionWithEntity((gridY - n) * Tile.TILE_HEIGHT)
+                        || hasCollisionWithTile(bomb.gridX, bomb.gridY - n)) {
+                    break;
                 }else {
+                    drawRect.y -= Tile.TILE_HEIGHT;
                     waveRange++;
                 }
             }
 
             //爆炸的底部y座標
-            //startY += Tile.TILE_HEIGHT * 2;
-            int endY = startY;
-            //算出下半邊爆炸範圍
-            for(int n=maxRange/2;n<maxRange;n++) {
-                if(hasCollisionWithEntity() || hasCollisionWithTile(leftX, endY / Tile.TILE_HEIGHT)
-                        || hasCollisionWithTile(rightX, endY / Tile.TILE_HEIGHT)) {
+            for(int n=1;n<=maxRange/2;n++) {
+                if(hasCollisionWithEntity((gridY + n) * Tile.TILE_HEIGHT)
+                        || hasCollisionWithTile(bomb.getGridX(), bomb.getGridY() + n)) {
                     break;
                 }else {
-                    //boundingRect.width += Tile.TILE_WIDTH;
                     waveRange++;
-                    endY += Tile.TILE_HEIGHT;
                 }
             }
 
-            boundingRect.height = Tile.TILE_HEIGHT * waveRange;
-            graphics.drawImage(AssetManager.unbreakableBox2, (int)position.x,
-                    startY, boundingRect.width,
-                    boundingRect.height, null);
+            drawRect.height = Tile.TILE_HEIGHT * waveRange;
             graphics.setColor(Color.BLUE);
-            graphics.fillRect((int)(position.x + boundingRect.x), startY,
-                    boundingRect.width, boundingRect.height);
-            boundingRect.y = temp;
-        }
+            graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y)
+                    , boundingRect.width, boundingRect.height);
 
-        //檢查與tile的碰撞
-        private boolean hasCollisionWithTile(int x, int y) {
-            return handler.getMap().getTile(x, y).isSolid();
+            //設定判斷用的bounding box
+            boundingRect.x = drawRect.x;
+            boundingRect.y = drawRect.y;
+            boundingRect.width = drawRect.width;
+            boundingRect.height = drawRect.height;
+
+            //歸0
+            drawRect.y = 0;
         }
 
         //檢查與entity的碰撞
-        private boolean hasCollisionWithEntity() {
+        private boolean hasCollisionWithEntity(int y) {
             for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
                 if(!entity.isDestroyed()
-                        && entity.getCollisionRect(0.0f, 0.0f)
-                        .intersects(getCollisionRect(0.0f, 0.0f))) {
+                        && entity.getCollisionRect(0.0f, 0.0f).contains(position.x, y)) {
                     //debug用
                     /*if(entity.equals(bomb.getPlayer())) {
                         continue;
                     }*/
                     //如果該entity可破壞，則不須削減爆炸範圍
                     if(entity.isBreakable()) {
-                        System.out.println(entity.getClass());
+                        //System.out.println(entity.getClass());
                         entity.setDestroyed(true);
                         return false;
                     }else

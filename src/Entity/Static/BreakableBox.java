@@ -26,8 +26,7 @@ public class BreakableBox extends StaticEntity {
     public void render(Graphics graphics) {
         graphics.drawImage(AssetManager.breakableBox, (int)position.x, (int)position.y, width, height, null);
         graphics.setColor(Color.GREEN);
-        graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y),
-                boundingRect.width, boundingRect.height);
+        graphics.fillRect((int)position.x, (int)position.y, boundingRect.width, boundingRect.height);
     }
 
     @Override

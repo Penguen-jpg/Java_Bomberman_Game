@@ -24,6 +24,8 @@ public class UnbreakableBox extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(AssetManager.unbreakableBox1, (int)position.x, (int)position.y, width, height, null);
+        graphics.drawImage(AssetManager.breakableBox, (int)position.x, (int)position.y, width, height, null);
+        graphics.setColor(Color.CYAN);
+        graphics.fillRect((int)position.x, (int)position.y, boundingRect.width, boundingRect.height);
     }
 }

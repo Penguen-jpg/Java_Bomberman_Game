@@ -45,8 +45,8 @@ public class Player extends Creature {
         rightAnimation = new Animation(500, assets[3]);
 
         //設定炸彈數值
-        power = 1;
-        maxAmmo = 1;
+        power = 2;
+        maxAmmo = 2;
         ammo = maxAmmo;
 
         //設定檢查用變數
@@ -62,6 +62,7 @@ public class Player extends Creature {
         leftAnimation.tick();
         rightAnimation.tick();
         getInput();
+        checkCollisionWithExplosion();
         move();
     }
 
@@ -75,20 +76,20 @@ public class Player extends Creature {
 
     //根據輸入做出對應動作
     private void getInput() {
-        direction.x = 0.0f;
-        direction.y = 0.0f;
+        velocity.x = 0.0f;
+        velocity.y = 0.0f;
 
         if(keyboardManager.up) {
-            direction.y = -1.0f;
+            velocity.y = -1.0f * speed;
         }
         if(keyboardManager.down) {
-            direction.y = 1.0f;
+            velocity.y = 1.0f * speed;
         }
         if(keyboardManager.left) {
-            direction.x = -1.0f;
+            velocity.x = -1.0f * speed;
         }
         if(keyboardManager.right) {
-            direction.x = 1.0f;
+            velocity.x = 1.0f * speed;
         }
         if(keyboardManager.action) {
             if(ammo > 0 && (System.currentTimeMillis() - coolDownTimer) > 400) {
@@ -100,11 +101,11 @@ public class Player extends Creature {
 
     //取得目前的動畫
     public BufferedImage getCurrentAnimationFrame() {
-        if(direction.x > 0.0f) {
+        if(velocity.x > 0.0f) {
             return rightAnimation.getCurrentFrame();
-        }else if(direction.x < 0.0f) {
+        }else if(velocity.x < 0.0f) {
             return leftAnimation.getCurrentFrame();
-        }else if(direction.y < 0.0f) {
+        }else if(velocity.y < 0.0f) {
             return upAnimation.getCurrentFrame();
         }else {
             return downAnimation.getCurrentFrame();
@@ -115,6 +116,7 @@ public class Player extends Creature {
         Bomb bomb = new Bomb(handler, this, power);
         //如果在可以放置的位置才放
         if(!bomb.checkBombCollision()) {
+            System.out.println("Bomb pos:" + "(" +bomb.getPosition().x+","+bomb.getPosition().y+")");
             bombRect = bomb.getCollisionRect(0.0f, 0.0f);
             justDrop = true;
             handler.getMap().getEntityManager().addBomb(bomb);

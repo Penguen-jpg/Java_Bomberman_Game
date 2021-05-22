@@ -1,5 +1,6 @@
 package Utility;
 
+import Entity.EntityManager;
 import Graphics.Game;
 import Input.Key;
 import Input.KeyboardManager;
@@ -29,12 +30,24 @@ public class Handler {
         return game.getMouseManager();
     }
 
+    public EntityManager getEntityManager() {
+        return map.getEntityManager();
+    }
+
     public int getWidth() {
         return game.getWidth();
     }
 
     public int getHeight() {
         return game.getHeight();
+    }
+
+    public int getMapWidth() {
+        return map.getWidth();
+    }
+
+    public int getMapHeight() {
+        return map.getHeight();
     }
 
     public Game getGame() {

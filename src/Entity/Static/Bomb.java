@@ -18,6 +18,7 @@ public class Bomb extends StaticEntity {
     //炸彈威力
     private int power;
 
+
     public Bomb(Handler handler, Player player, int power) {
         super(handler, player.getPosition().x, player.getPosition().y, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
         this.player = player;
@@ -47,14 +48,11 @@ public class Bomb extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(AssetManager.unbreakableBox2, (int)position.x, (int)position.y,
-                Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
+        graphics.drawImage(AssetManager.unbreakableBox2, (int)position.x, (int)position.y
+                , Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
         graphics.setColor(Color.RED);
-        //center of bomb
-        /*graphics.fillRect((int)(position.x + Tile.TILE_WIDTH / 2 - 4),
-                (int)(position.y + Tile.TILE_HEIGHT / 2 - 4), 10, 10);*/
-        graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y),
-                boundingRect.width, boundingRect.height);
+        graphics.fillRect((int)(position.x + boundingRect.x) ,(int)(position.y + boundingRect.y)
+                , boundingRect.width, boundingRect.height);
     }
 
     private void explode() {
@@ -72,7 +70,7 @@ public class Bomb extends StaticEntity {
     //檢查炸彈與其他東西的碰撞
     public boolean checkBombCollision() {
         //檢查與entity的碰撞
-        for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
+        for(Entity entity : handler.getEntityManager().getEntities()) {
             //不檢查要放下的玩家
             if(entity.isDestroyed() || entity.equals(player)) {
                 continue;
@@ -85,12 +83,12 @@ public class Bomb extends StaticEntity {
         }
 
         //檢查炸彈之間的碰撞
-        for(Bomb bomb : handler.getMap().getEntityManager().getBombs()) {
+        for(Bomb bomb : handler.getEntityManager().getBombs()) {
             if(bomb.isDestroyed() || bomb.equals(this)) {
                 continue;
             }
 
-            //檢查別人是否跟自己產生碰撞
+            //檢查別的炸彈是否跟這顆炸彈產生碰撞
             if(bomb.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(0.0f, 0.0f))) {
                 return true;
             }
@@ -102,10 +100,6 @@ public class Bomb extends StaticEntity {
     //getters
     public int getPower() {
         return power;
-    }
-
-    public long getTimer() {
-        return timer;
     }
 
     public Player getPlayer() {
