@@ -110,15 +110,16 @@ public abstract class Explosion extends StaticEntity {
             drawRect.x = 0;
         }
 
+        @Override
+        public void onDestroy() {
+
+        }
+
         //檢查與entity的碰撞
         private boolean hasCollisionWithEntity(int x){
             for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
                 if (!entity.isDestroyed()
                         && (entity.getCollisionRect(0.0f, 0.0f).contains(x, position.y))) {
-                    //debug用
-                    /*if(entity.equals(bomb.getPlayer())) {
-                        continue;
-                    }*/
                     /*Rectangle temp = getCollisionRect(xOffset, 0.0f);
                     System.out.println("Rect now:"+"x:"+temp.x+" y:"+temp.y
                             +" w:"+temp.width+" h:"+temp.height);*/
@@ -126,7 +127,7 @@ public abstract class Explosion extends StaticEntity {
                     if (entity.isBreakable()) {
                         //System.out.println("nowX:"+(boundingRect.x+Tile.TILE_WIDTH));
                         entity.setDestroyed(true);
-                        return false;
+                        return true;
                     } else {
                         System.out.println("Collide with unbreakable entity");
                         return true;
@@ -201,20 +202,21 @@ public abstract class Explosion extends StaticEntity {
             drawRect.y = 0;
         }
 
+        @Override
+        public void onDestroy() {
+
+        }
+
         //檢查與entity的碰撞
         private boolean hasCollisionWithEntity(int y) {
             for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
                 if(!entity.isDestroyed()
                         && entity.getCollisionRect(0.0f, 0.0f).contains(position.x, y)) {
-                    //debug用
-                    /*if(entity.equals(bomb.getPlayer())) {
-                        continue;
-                    }*/
                     //如果該entity可破壞，則不須削減爆炸範圍
                     if(entity.isBreakable()) {
                         //System.out.println(entity.getClass());
                         entity.setDestroyed(true);
-                        return false;
+                        return true;
                     }else
                     {
                         System.out.println("Collide with unbreakable entity");

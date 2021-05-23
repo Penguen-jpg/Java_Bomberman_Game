@@ -55,6 +55,11 @@ public class Bomb extends StaticEntity {
                 , boundingRect.width, boundingRect.height);
     }
 
+    @Override
+    public void onDestroy() {
+
+    }
+
     private void explode() {
         //System.out.println("Bom!!!");
         if(!destroyed) {

@@ -51,6 +51,9 @@ public abstract class Entity {
         return false;
     }
 
+    //被破壞時做的動作
+    public abstract void onDestroy();
+
     //是否可被破壞
     public boolean isBreakable() {
         return false;

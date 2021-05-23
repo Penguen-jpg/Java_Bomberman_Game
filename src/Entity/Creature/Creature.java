@@ -107,9 +107,10 @@ public abstract class Creature extends Entity {
             if(!explosion.isDestroyed()
                     && explosion.getCollisionRect(0.0f, 0.0f)
                     .intersects(getCollisionRect(0.0f, 0.0f))) {
-                Rectangle temp = explosion.getCollisionRect(0.0f, 0.0f);
-                System.out.println(temp);
+                //Rectangle temp = explosion.getCollisionRect(0.0f, 0.0f);
+                //System.out.println(temp);
                 destroyed = true;
+                return;
             }
         }
     }

@@ -17,6 +17,8 @@ public class Player extends Creature {
     private Animation upAnimation;
     private Animation leftAnimation;
     private Animation rightAnimation;
+    //玩家id
+    private int id;
     //炸彈數值
     private int power;
     private int ammo;
@@ -28,9 +30,10 @@ public class Player extends Creature {
     //是否剛丟下炸彈
     private boolean justDrop;
 
-    public Player(Handler handler , float x, float y, KeyboardManager keyboardManager, BufferedImage[][] assets) {
+    public Player(Handler handler , float x, float y, KeyboardManager keyboardManager, BufferedImage[][] assets, int id) {
         super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT);
         this.keyboardManager = keyboardManager;
+        this.id = id;
 
         //設定bounding box
         boundingRect.x = 22;
@@ -72,6 +75,11 @@ public class Player extends Creature {
         /*graphics.setColor(Color.RED);
         graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y)
                 , boundingRect.width, boundingRect.height);*/
+    }
+
+    @Override
+    public void onDestroy() {
+        System.out.println("Player" + id + " lose");
     }
 
     //根據輸入做出對應動作
@@ -160,5 +168,18 @@ public class Player extends Creature {
         }
 
         return false;
+    }
+
+    public void powerUp(int amount) {
+        power += amount;
+    }
+
+    public void speedUp(float amount) {
+        speed += amount;
+    }
+
+    public void ammoUp(int amount) {
+        maxAmmo += amount;
+        ammo = maxAmmo;
     }
 }

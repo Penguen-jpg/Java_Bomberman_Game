@@ -28,4 +28,9 @@ public class UnbreakableBox extends StaticEntity {
         graphics.setColor(Color.CYAN);
         graphics.fillRect((int)position.x, (int)position.y, boundingRect.width, boundingRect.height);
     }
+
+    @Override
+    public void onDestroy() {
+
+    }
 }

@@ -4,6 +4,8 @@ import Entity.Creature.Player;
 import Entity.EntityManager;
 import Entity.Static.BreakableBox;
 import Entity.Static.UnbreakableBox;
+import Item.Item;
+import Item.ItemManager;
 import Texture.Tile;
 import Utility.Handler;
 import Utility.Helper;
@@ -19,13 +21,15 @@ public class Map {
     private Handler handler;
     //entity manager
     private EntityManager entityManager;
+    //item manager
+    private ItemManager itemManager;
 
     public Map(Handler handler, String path) {
         this.handler = handler;
         loadMap(path);
         entityManager = new EntityManager(handler,
-                new Player(handler, 0.0f, 0.0f, handler.getKeyboardManager(0), AssetManager.player1Animation),
-                new Player(handler, 200.0f, 0.0f, handler.getKeyboardManager(1), AssetManager.player1Animation));
+                new Player(handler, 0.0f, 0.0f, handler.getKeyboardManager(0), AssetManager.player1Animation, 1),
+                new Player(handler, 200.0f, 0.0f, handler.getKeyboardManager(1), AssetManager.player1Animation, 2));
         entityManager.getPlayer1().setPosition(spawnX, spawnY);
         entityManager.addEntity(new BreakableBox(handler, 64.0f, 170.0f));
         entityManager.addEntity(new BreakableBox(handler, 128.0f, 170.0f));
@@ -37,6 +41,8 @@ public class Map {
         entityManager.addEntity(new UnbreakableBox(handler, 600.0f, 400.0f));
         entityManager.addEntity(new UnbreakableBox(handler, 450.0f, 400.0f));
         entityManager.addEntity(new UnbreakableBox(handler, 380.0f, 400.0f));
+
+        itemManager = new ItemManager(handler);
     }
 
     private void loadMap(String path) {
@@ -59,6 +65,7 @@ public class Map {
     }
 
     public void tick() {
+        itemManager.tick();
         entityManager.tick();
     }
 
@@ -69,12 +76,17 @@ public class Map {
             }
         }
 
+        itemManager.render(graphics);
         entityManager.render(graphics);
     }
 
     //getters
     public EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 
     public boolean isSolidTile(int x, int y) {

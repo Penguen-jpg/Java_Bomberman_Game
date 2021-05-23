@@ -8,6 +8,8 @@ import Utility.Handler;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EntityManager {
     private Handler handler;
@@ -16,10 +18,10 @@ public class EntityManager {
     private Player player2;
     //儲存所有entity
     private ArrayList<Entity> entities;
-    //儲存所有炸彈
-    private ArrayList<Bomb> bombs;
-    //儲存所有爆炸
-    private ArrayList<Explosion> explosions;
+    //儲存所有炸彈(使用CopyOnWriteArrayList才能同時讀取同時加入或刪除)
+    private CopyOnWriteArrayList<Bomb> bombs;
+    //儲存所有爆炸(使用CopyOnWriteArrayList才能同時讀取同時加入或刪除)
+    private CopyOnWriteArrayList<Explosion> explosions;
     //處理渲染順序
     private Comparator<Entity> renderSorter = new Comparator<Entity>() {
         @Override
@@ -38,51 +40,55 @@ public class EntityManager {
         this.player1 = player1;
         this.player2 = player2;
         entities = new ArrayList<>();
-        bombs = new ArrayList<>();
-        explosions = new ArrayList<>();
+        bombs = new CopyOnWriteArrayList<>();
+        explosions = new CopyOnWriteArrayList<>();
         addEntity(player1);
         addEntity(player2);
     }
 
     public void tick() {
-        for(Entity entity : entities) {
-            if(!entity.destroyed) {
-                entity.tick();
+        //走訪器(用iterator才能安全的移除元素)
+        Iterator<Entity> it = entities.iterator();
+
+        while(it.hasNext()) {
+            Entity entity = it.next();
+            entity.tick();
+            if(entity.destroyed) {
+                entity.onDestroy();
+                it.remove();
             }
         }
+
         //排序
         entities.sort(renderSorter);
 
         for(Bomb bomb : bombs) {
-            if(!bomb.destroyed) {
-                bomb.tick();
+            bomb.tick();
+            if(bomb.destroyed) {
+                //CopyOnWriteArrayList不能透過走訪器移除
+                bombs.remove(bomb);
             }
         }
 
         for(Explosion explosion : explosions) {
-            if(!explosion.destroyed) {
-                explosion.tick();
+            explosion.tick();
+            if(explosion.destroyed) {
+                explosions.remove(explosion);
             }
         }
     }
 
     public void render(Graphics graphics) {
         for(Entity entity : entities) {
-            if(!entity.destroyed) {
-                entity.render(graphics);
-            }
+            entity.render(graphics);
         }
 
         for(Bomb bomb : bombs) {
-            if(!bomb.destroyed) {
-                bomb.render(graphics);
-            }
+            bomb.render(graphics);
         }
 
         for(Explosion explosion : explosions) {
-            if(!explosion.destroyed) {
-                explosion.render(graphics);
-            }
+            explosion.render(graphics);
         }
     }
 
@@ -108,11 +114,13 @@ public class EntityManager {
         return entities;
     }
 
-    public ArrayList<Bomb> getBombs() {
+    public CopyOnWriteArrayList<Bomb> getBombs() {
         return bombs;
     }
 
-    public ArrayList<Explosion> getExplosions() { return explosions; }
+    public CopyOnWriteArrayList<Explosion> getExplosions() {
+        return explosions;
+    }
 
     public void setHandler(Handler handler) {
         this.handler = handler;

@@ -5,6 +5,7 @@ import Graphics.Game;
 import Input.Key;
 import Input.KeyboardManager;
 import Input.MouseManager;
+import Item.ItemManager;
 import Maps.Map;
 
 import java.awt.event.KeyEvent;
@@ -32,6 +33,10 @@ public class Handler {
 
     public EntityManager getEntityManager() {
         return map.getEntityManager();
+    }
+
+    public ItemManager getItemManager() {
+        return map.getItemManager();
     }
 
     public int getWidth() {
