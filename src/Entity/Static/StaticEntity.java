@@ -14,8 +14,8 @@ public abstract class StaticEntity extends Entity {
         destroyed = false;
 
         //設定gridX,gridY
-        gridX = (int)((position.x + Tile.TILE_WIDTH / 2) / Tile.TILE_WIDTH);
-        gridY = (int)((position.y + Tile.TILE_HEIGHT / 2) / Tile.TILE_HEIGHT);
+        gridX = (int) ((position.x + Tile.TILE_WIDTH / 2) / Tile.TILE_WIDTH);
+        gridY = (int) ((position.y + Tile.TILE_HEIGHT / 2) / Tile.TILE_HEIGHT);
 
         //重新定位位置
         position.x = gridX * Tile.TILE_WIDTH;

@@ -27,9 +27,9 @@ public class EntityManager {
         @Override
         public int compare(Entity a, Entity b) {
             //如果a的底部y座標比b的底部y座標小，優先渲染
-            if(a.getPosition().y + a.getHeight() < b.getPosition().y + b.getHeight()) {
+            if (a.getPosition().y + a.getHeight() < b.getPosition().y + b.getHeight()) {
                 return -1;
-            }else {
+            } else {
                 return 1;
             }
         }
@@ -50,44 +50,44 @@ public class EntityManager {
         //走訪器(用iterator才能安全的移除元素)
         Iterator<Entity> it = entities.iterator();
 
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Entity entity = it.next();
             entity.tick();
-            if(entity.destroyed) {
+            if (entity.destroyed) {
                 entity.onDestroy();
                 it.remove();
             }
         }
 
-        //排序
+        //排序(決定渲染順序)
         entities.sort(renderSorter);
 
-        for(Bomb bomb : bombs) {
+        for (Bomb bomb : bombs) {
             bomb.tick();
-            if(bomb.destroyed) {
+            if (bomb.destroyed) {
                 //CopyOnWriteArrayList不能透過走訪器移除
                 bombs.remove(bomb);
             }
         }
 
-        for(Explosion explosion : explosions) {
+        for (Explosion explosion : explosions) {
             explosion.tick();
-            if(explosion.destroyed) {
+            if (explosion.destroyed) {
                 explosions.remove(explosion);
             }
         }
     }
 
     public void render(Graphics graphics) {
-        for(Entity entity : entities) {
+        for (Entity entity : entities) {
             entity.render(graphics);
         }
 
-        for(Bomb bomb : bombs) {
+        for (Bomb bomb : bombs) {
             bomb.render(graphics);
         }
 
-        for(Explosion explosion : explosions) {
+        for (Explosion explosion : explosions) {
             explosion.render(graphics);
         }
     }
@@ -96,10 +96,15 @@ public class EntityManager {
         entities.add(entity);
     }
 
-    public void addBomb(Bomb bomb) { bombs.add(bomb); }
+    public void addBomb(Bomb bomb) {
+        bombs.add(bomb);
+    }
 
-    public void addExplosion(Explosion explosion) { explosions.add(explosion); }
+    public void addExplosion(Explosion explosion) {
+        explosions.add(explosion);
+    }
 
+    //getters and setters
     public Handler getHandler() {
         return handler;
     }
@@ -108,7 +113,9 @@ public class EntityManager {
         return player1;
     }
 
-    public Player getPlayer2() { return player2; }
+    public Player getPlayer2() {
+        return player2;
+    }
 
     public ArrayList<Entity> getEntities() {
         return entities;
@@ -124,17 +131,5 @@ public class EntityManager {
 
     public void setHandler(Handler handler) {
         this.handler = handler;
-    }
-
-    public void setPlayer1(Player player) {
-        this.player1 = player;
-    }
-
-    public void setPlayer2(Player player) {
-        this.player2 = player;
-    }
-
-    public void setEntities(ArrayList<Entity> entities) {
-        this.entities = entities;
     }
 }

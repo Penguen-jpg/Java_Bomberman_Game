@@ -4,12 +4,11 @@ import Entity.Creature.Player;
 import Entity.EntityManager;
 import Entity.Static.BreakableBox;
 import Entity.Static.UnbreakableBox;
-import Item.Item;
+import Graphics.AssetManager;
 import Item.ItemManager;
 import Texture.Tile;
 import Utility.Handler;
 import Utility.Helper;
-import Graphics.AssetManager;
 
 import java.awt.*;
 
@@ -56,8 +55,8 @@ public class Map {
         tileTypes = new int[width][height];
         tiles = new Tile[width][height];
 
-        for(int y=0;y<height;y++) {
-            for(int x=0;x<width;x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 tileTypes[x][y] = Helper.parseInt(tokens[(x + y * width) + 4]);
                 tiles[x][y] = Tile.tiles[tileTypes[x][y]];
             }
@@ -70,8 +69,8 @@ public class Map {
     }
 
     public void render(Graphics graphics) {
-        for(int y=0;y<height;y++) {
-            for(int x=0;x<width;x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 tiles[x][y].render(graphics, x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
             }
         }
@@ -90,7 +89,7 @@ public class Map {
     }
 
     public boolean isSolidTile(int x, int y) {
-        if(x < 0 || y < 0 || x >= width || y>= width) {
+        if (x < 0 || y < 0 || x >= width || y >= width) {
             return Tile.floorTile1.isSolid();
         }
 
@@ -98,7 +97,7 @@ public class Map {
     }
 
     public Tile getTile(int x, int y) {
-        if(x < 0 || y < 0 || x >= width || y >= height) {
+        if (x < 0 || y < 0 || x >= width || y >= height) {
             return Tile.topLeftCorner;
         }
         return tiles[x][y];

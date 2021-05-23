@@ -1,4 +1,7 @@
-# Java_Bomberman_Game_For_Test
+# Java_Bomberman_Game
+
+## IDE
+Intellij IDEA Community Edition 2021.1.1
 
 ## 更新事項(2021/5/21)
 1. 取代原本的tile，換上新的tile
@@ -16,20 +19,24 @@
 1. 新增Item雛形
 2. 取消Creature的血量設定
 3. 現在可以移除被破壞的entity了
-4. Entity新增onDestroy()，用來處理死亡時要做的動作
+4. Entity新增onDestroy()，用來處理死亡時要做的事
+5. 解決Explosion的碰撞問題(包括與Tile和Entity的碰撞)
+6. 新增註解及修改部分註解
 
 ---
 
 ## 待完成事項
-1. 處理Explosion無法碰撞到Player的問題(暫時用另一種方法解決了，但希望能用原本想的方式)
+1. ~~處理Explosion無法碰撞到Entity的問題~~
 2. 將角色以及炸彈的sprite替換上去
-3. 處理Player與Tile的碰撞判定(精準度已經足夠，希望能換更有效的判斷方式)
-4. ~~道具(火力強化、移動速度增加...)~~
+3. ~~處理Player與Tile的碰撞判定(精準度已經足夠，希望能換更有效的判斷方式)~~
+4. ~~道具(火力強化、移動速度增加...)雛形~~
 5. 設計地圖
 6. 做選單
 7. 選地圖(可能會做也可能不會做)
 8. 對戰規則設定 
 9. UI
+10. 新增道具種類並設定生成機率
+11. 幫道具套上texture
 
 ---
 
@@ -38,3 +45,5 @@
 https://youtube.com/playlist?list=PLah6faXAgguMnTBs3JnEJY0shAc18XYQZ
 2. 遊戲內的Tile
 https://free-game-assets.itch.io/free-industrial-zone-tileset-pixel-art
+3. 幫了大忙的參考作品
+https://github.com/blai30/bomberman-java

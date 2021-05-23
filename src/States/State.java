@@ -2,7 +2,7 @@ package States;
 
 import Utility.Handler;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 public abstract class State {
     protected Handler handler;
@@ -13,5 +13,6 @@ public abstract class State {
 
     //methods of state
     public abstract void tick();
+
     public abstract void render(Graphics graphics);
 }

@@ -7,9 +7,9 @@ import Utility.Position;
 import java.awt.*;
 
 public abstract class Entity {
-    //位置
+    //目前位置
     protected Position position;
-    //寬 高
+    //entity的寬 高
     protected int width, height;
     protected Handler handler;
     //bounding box
@@ -26,29 +26,41 @@ public abstract class Entity {
     }
 
     public abstract void tick();
+
     public abstract void render(Graphics graphics);
 
-    //取得目前的bounding box
+    //取得所在位置的bounding box
     public Rectangle getCollisionRect(float xOffset, float yOffset) {
-        return new Rectangle((int)(position.x + boundingRect.x + xOffset),
-                (int)(position.y + boundingRect.y + yOffset), boundingRect.width, boundingRect.height);
+        return new Rectangle((int) (position.x + boundingRect.x + xOffset),
+                (int) (position.y + boundingRect.y + yOffset), boundingRect.width, boundingRect.height);
     }
 
     //檢查是否和其他Entity產生碰撞
     public boolean checkEntityCollision(float xOffset, float yOffset) {
         //檢查entity之間的碰撞
-        for(Entity entity : handler.getMap().getEntityManager().getEntities()) {
+        for (Entity entity : handler.getMap().getEntityManager().getEntities()) {
             //不檢查自己
-            if(entity.destroyed || entity.equals(this)) {
+            if (entity.destroyed || entity.equals(this)) {
                 continue;
             }
 
             //檢查別人是否跟自己產生碰撞
-            if(entity.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(xOffset, yOffset))) {
+            if (entity.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(xOffset, yOffset))) {
                 return true;
             }
         }
         return false;
+    }
+
+    //檢查與爆炸的碰撞
+    protected void checkCollisionWithExplosion() {
+        for (Explosion explosion : handler.getEntityManager().getExplosions()) {
+            if (!explosion.isDestroyed()
+                    && explosion.getBoundingRect().intersects(getCollisionRect(0.0f, 0.0f))) {
+                destroyed = true;
+                return;
+            }
+        }
     }
 
     //被破壞時做的動作
@@ -64,9 +76,13 @@ public abstract class Entity {
         return destroyed;
     }
 
-    //getters/setters
+    //getters and setters
     public Position getPosition() {
         return position;
+    }
+
+    public Rectangle getBoundingRect() {
+        return boundingRect;
     }
 
     public int getWidth() {

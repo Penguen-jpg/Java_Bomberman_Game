@@ -2,9 +2,6 @@ package Graphics;
 
 import Input.KeyboardManager;
 import Input.MouseManager;
-import States.GameState;
-import States.MenuState;
-import States.State;
 import States.StateManager;
 import Utility.Handler;
 import Utility.Timer;
@@ -28,8 +25,6 @@ public class Game implements Runnable {
     //計時器
     private Timer timer;
     //狀態
-    //public State gameState;
-    //public State menuState;
     private StateManager stateManager;
     //鍵盤輸入
     private ArrayList<KeyboardManager> keyboardManagers;
@@ -42,7 +37,6 @@ public class Game implements Runnable {
         this.title = title;
         this.width = width;
         this.height = height;
-        //keyboardManager = new KeyboardManager();
         mouseManager = new MouseManager();
     }
 
@@ -59,23 +53,20 @@ public class Game implements Runnable {
         window.getFrame().addKeyListener(keyboardManagers.get(0));
         window.getFrame().addKeyListener(keyboardManagers.get(1));
         stateManager = new StateManager(handler);
-        //gameState = new GameState(handler);
-        //menuState = new MenuState(handler);
-        //State.setState(menuState);
         stateManager.setCurrentState(stateManager.menuState);
     }
 
+    //更新
     private void tick() {
-        if(stateManager.getCurrentState() != null) {
+        if (stateManager.getCurrentState() != null) {
             stateManager.getCurrentState().tick();
         }
     }
 
-    int x = 0;
-
+    //渲染
     private void render() {
         buffer = window.getCanvas().getBufferStrategy();
-        if(buffer == null) {
+        if (buffer == null) {
             window.getCanvas().createBufferStrategy(3);
             return;
         }
@@ -86,7 +77,7 @@ public class Game implements Runnable {
         //清空畫面
         graphics.clearRect(0, 0, width, height);
         //繪圖開始
-        if(stateManager.getCurrentState() != null) {
+        if (stateManager.getCurrentState() != null) {
             stateManager.getCurrentState().render(graphics);
         }
         //繪圖結束
@@ -100,8 +91,8 @@ public class Game implements Runnable {
     public void run() {
         init();
 
-        while(running) {
-            if(timer.check()) {
+        while (running) {
+            if (timer.check()) {
                 tick();
                 render();
                 timer.ticks++;
@@ -112,8 +103,7 @@ public class Game implements Runnable {
     }
 
     public synchronized void start() {
-        if(running)
-        {
+        if (running) {
             return;
         }
 
@@ -123,8 +113,7 @@ public class Game implements Runnable {
     }
 
     public synchronized void stop() {
-        if(!running)
-        {
+        if (!running) {
             return;
         }
 
@@ -136,10 +125,11 @@ public class Game implements Runnable {
         }
     }
 
-    //getters/setters
+    //getters and setters
     public KeyboardManager getKeyboardManager(int index) {
         return keyboardManagers.get(index);
     }
+
     public MouseManager getMouseManager() {
         return mouseManager;
     }
@@ -151,6 +141,7 @@ public class Game implements Runnable {
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }

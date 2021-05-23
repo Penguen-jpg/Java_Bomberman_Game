@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//用來處理多層的getters和setters以及基本操作的設定
 public class Handler {
     private Game game;
     private Map map;
@@ -22,7 +23,7 @@ public class Handler {
         setKeys();
     }
 
-    //getters/setters
+    //getters and setters
     public KeyboardManager getKeyboardManager(int index) {
         return game.getKeyboardManager(index);
     }

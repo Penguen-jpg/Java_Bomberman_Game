@@ -1,7 +1,6 @@
 package Graphics;
 
-import javax.swing.JPanel;
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 
 public class Window {
@@ -39,5 +38,8 @@ public class Window {
     public Canvas getCanvas() {
         return canvas;
     }
-    public JFrame getFrame() { return frame; }
+
+    public JFrame getFrame() {
+        return frame;
+    }
 }

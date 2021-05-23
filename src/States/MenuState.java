@@ -1,7 +1,8 @@
 package States;
 
-import java.awt.*;
 import Utility.Handler;
+
+import java.awt.*;
 
 public class MenuState extends State {
     public MenuState(Handler handler) {
@@ -10,7 +11,7 @@ public class MenuState extends State {
 
     @Override
     public void tick() {
-        if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed()) {
+        if (handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed()) {
             handler.getGame().getStateManager().setCurrentState(handler.getGame().getStateManager().gameState);
         }
     }

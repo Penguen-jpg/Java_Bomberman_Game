@@ -1,13 +1,13 @@
 package Entity.Creature;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import Entity.Static.Bomb;
-import Graphics.*;
+import Graphics.Animation;
 import Input.KeyboardManager;
 import Texture.Tile;
 import Utility.Handler;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Player extends Creature {
     //角色的keyboard manager
@@ -23,6 +23,7 @@ public class Player extends Creature {
     private int power;
     private int ammo;
     private int maxAmmo;
+    private boolean pierce;
     //避免重複偵測到空白鍵按下
     private long coolDownTimer;
     //紀路放下炸彈的bounding box(目的在於剛放下炸彈時不用做碰撞判定)
@@ -30,7 +31,7 @@ public class Player extends Creature {
     //是否剛丟下炸彈
     private boolean justDrop;
 
-    public Player(Handler handler , float x, float y, KeyboardManager keyboardManager, BufferedImage[][] assets, int id) {
+    public Player(Handler handler, float x, float y, KeyboardManager keyboardManager, BufferedImage[][] assets, int id) {
         super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT);
         this.keyboardManager = keyboardManager;
         this.id = id;
@@ -51,6 +52,7 @@ public class Player extends Creature {
         power = 2;
         maxAmmo = 2;
         ammo = maxAmmo;
+        pierce = false;
 
         //設定檢查用變數
         coolDownTimer = 0;
@@ -71,7 +73,11 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(getCurrentAnimationFrame(), (int)position.x, (int)position.y, width, height, null);
+        graphics.drawImage(getCurrentAnimationFrame(), (int) position.x, (int) position.y, width, height, null);
+        Rectangle temp = new Rectangle(256, 192, 64, 192);
+        Rectangle temp2 = new Rectangle(143, 79, 19, 33);
+
+        //畫出碰撞區域
         /*graphics.setColor(Color.RED);
         graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y)
                 , boundingRect.width, boundingRect.height);*/
@@ -87,20 +93,20 @@ public class Player extends Creature {
         velocity.x = 0.0f;
         velocity.y = 0.0f;
 
-        if(keyboardManager.up) {
+        if (keyboardManager.up) {
             velocity.y = -1.0f * speed;
         }
-        if(keyboardManager.down) {
+        if (keyboardManager.down) {
             velocity.y = 1.0f * speed;
         }
-        if(keyboardManager.left) {
+        if (keyboardManager.left) {
             velocity.x = -1.0f * speed;
         }
-        if(keyboardManager.right) {
+        if (keyboardManager.right) {
             velocity.x = 1.0f * speed;
         }
-        if(keyboardManager.action) {
-            if(ammo > 0 && (System.currentTimeMillis() - coolDownTimer) > 400) {
+        if (keyboardManager.action) {
+            if (ammo > 0 && (System.currentTimeMillis() - coolDownTimer) > 400) {
                 coolDownTimer = System.currentTimeMillis();
                 dropBomb(power);
             }
@@ -109,41 +115,42 @@ public class Player extends Creature {
 
     //取得目前的動畫
     public BufferedImage getCurrentAnimationFrame() {
-        if(velocity.x > 0.0f) {
+        if (velocity.x > 0.0f) {
             return rightAnimation.getCurrentFrame();
-        }else if(velocity.x < 0.0f) {
+        } else if (velocity.x < 0.0f) {
             return leftAnimation.getCurrentFrame();
-        }else if(velocity.y < 0.0f) {
+        } else if (velocity.y < 0.0f) {
             return upAnimation.getCurrentFrame();
-        }else {
+        } else {
             return downAnimation.getCurrentFrame();
         }
     }
 
+    //丟下炸彈
     public void dropBomb(int power) {
-        Bomb bomb = new Bomb(handler, this, power);
+        Bomb bomb = new Bomb(handler, this, power, pierce);
         //如果在可以放置的位置才放
-        if(!bomb.checkBombCollision()) {
-            System.out.println("Bomb pos:" + "(" +bomb.getPosition().x+","+bomb.getPosition().y+")");
+        if (!bomb.checkBombCollision()) {
+            System.out.println("Bomb pos:" + "(" + bomb.getPosition().x + "," + bomb.getPosition().y + ")");
             bombRect = bomb.getCollisionRect(0.0f, 0.0f);
             justDrop = true;
             handler.getMap().getEntityManager().addBomb(bomb);
             ammo--;
-        }else
-        {
+        } else {
             System.out.println("Bomb collides with other entities");
         }
     }
 
+    //重新補充彈藥
     public void restoreAmmo() {
-        if(ammo < maxAmmo) {
+        if (ammo < maxAmmo) {
             ammo++;
         }
     }
 
     //丟下炸彈後是否離開炸彈
     private boolean leaveBomb() {
-        if(getCollisionRect(0.0f, 0.0f).intersects(bombRect) && justDrop) {
+        if (getCollisionRect(0.0f, 0.0f).intersects(bombRect) && justDrop) {
             return false;
         }
         justDrop = false;
@@ -154,14 +161,13 @@ public class Player extends Creature {
     @Override
     protected boolean hasCollisionWithBomb(float xOffset, float yOffset) {
         //還沒離開炸彈
-        if(!leaveBomb()) {
+        if (!leaveBomb()) {
             return false;
         }
 
-        for(Bomb bomb : handler.getMap().getEntityManager().getBombs()) {
-            if(!bomb.isDestroyed() &&
-                    bomb.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(xOffset, yOffset)))
-            {
+        for (Bomb bomb : handler.getMap().getEntityManager().getBombs()) {
+            if (!bomb.isDestroyed() &&
+                    bomb.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(xOffset, yOffset))) {
                 System.out.println("Player collides with bomb");
                 return true;
             }
@@ -170,6 +176,7 @@ public class Player extends Creature {
         return false;
     }
 
+    //道具加成效果
     public void powerUp(int amount) {
         power += amount;
     }
@@ -181,5 +188,9 @@ public class Player extends Creature {
     public void ammoUp(int amount) {
         maxAmmo += amount;
         ammo = maxAmmo;
+    }
+
+    public void setPierce(boolean pierce) {
+        this.pierce = pierce;
     }
 }

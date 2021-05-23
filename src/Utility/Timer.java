@@ -15,7 +15,8 @@ public class Timer {
         deltaTime += (now - lastTime) / timePerTick;
         lastTime = now;//更新過去時間
 
-        if(deltaTime >= 1) {
+        //時間到
+        if (deltaTime >= 1) {
             deltaTime--;
             return true;
         }

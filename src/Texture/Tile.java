@@ -25,13 +25,13 @@ public class Tile {
     public static Tile bottomLeftCorner = new CornerTile(AssetManager.bottomLeftCorner, 7);
     public static Tile bottomFloor = new CornerTile(AssetManager.bottomFloor, 8);
     public static Tile bottomRightFloor = new CornerTile(AssetManager.bottomRightCorner, 9);
-    public static Tile leftSideFloor= new CornerTile(AssetManager.leftSideFloor, 10);
+    public static Tile leftSideFloor = new CornerTile(AssetManager.leftSideFloor, 10);
     public static Tile rightSideFloor = new CornerTile(AssetManager.rightSideFloor, 11);
 
     public Tile(BufferedImage texture, int type) {
         this.texture = texture;
         this.type = type;
-        //將tiles[id]指定給呼叫method的Tile
+        //將tiles[type]指定給呼叫method的tile
         tiles[type] = this;
     }
 
@@ -43,6 +43,7 @@ public class Tile {
         graphics.drawImage(texture, x, y, TILE_WIDTH, TILE_HEIGHT, null);
     }
 
+    //是否為solid
     public boolean isSolid() {
         return false;
     }

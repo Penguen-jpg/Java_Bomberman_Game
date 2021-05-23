@@ -1,12 +1,9 @@
 package States;
 
-import java.awt.*;
-
-import Graphics.AssetManager;
-import Graphics.Game;
 import Maps.Map;
-import Texture.Tile;
 import Utility.Handler;
+
+import java.awt.*;
 
 public class GameState extends State {
     private Map map;

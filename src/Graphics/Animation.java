@@ -28,10 +28,10 @@ public class Animation {
         lastTime = System.currentTimeMillis();
 
         //檢查是否要播放下一張圖片
-        if(timer > speed) {
+        if (timer > speed) {
             index++;
             timer = 0;
-            if(index >= frames.length) {
+            if (index >= frames.length) {
                 index = 0;
             }
         }

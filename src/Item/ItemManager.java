@@ -19,21 +19,23 @@ public class ItemManager {
         //走訪器
         Iterator<Item> it = items.iterator();
 
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Item item = it.next();
             item.tick();
-            if(item.isPickedUp()) {
+            //被撿起後就移除
+            if (item.isPickedUp()) {
                 it.remove();
             }
         }
     }
 
     public void render(Graphics graphics) {
-        for(Item item : items) {
+        for (Item item : items) {
             item.render(graphics);
         }
     }
 
+    //加入新的item
     public void addItem(Item item) {
         item.setHandler(handler);
         items.add(item);

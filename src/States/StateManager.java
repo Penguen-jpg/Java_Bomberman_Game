@@ -14,7 +14,7 @@ public class StateManager {
         menuState = new MenuState(handler);
     }
 
-    //getter/setter
+    //getter and setter
     public State getCurrentState() {
         return currentState;
     }

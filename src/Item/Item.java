@@ -1,11 +1,11 @@
 package Item;
 
 import Entity.Creature.Player;
+import Graphics.AssetManager;
 import Utility.Handler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import Graphics.AssetManager;
 
 public class Item {
     //儲存所有種類的item
@@ -33,41 +33,44 @@ public class Item {
         this.name = name;
         this.type = type;
         pickedUp = false;
-
         boundingRect = new Rectangle(x, y, ITEM_WIDTH, ITEM_HEIGHT);
-
+        //將items[tpye]指定給呼叫method的item
         items[type] = this;
     }
 
     public void tick() {
-        if(handler.getEntityManager().getPlayer1().getCollisionRect(0.0f, 0.0f).intersects(boundingRect)) {
+        if (handler.getEntityManager().getPlayer1().getCollisionRect(0.0f, 0.0f).intersects(boundingRect)) {
             itemEffect(handler.getEntityManager().getPlayer1());
             System.out.println("Player1 got item");
             pickedUp = true;
-        }else if(handler.getEntityManager().getPlayer2().getCollisionRect(0.0f, 0.0f).intersects(boundingRect)) {
+        } else if (handler.getEntityManager().getPlayer2().getCollisionRect(0.0f, 0.0f).intersects(boundingRect)) {
             itemEffect(handler.getEntityManager().getPlayer2());
             System.out.println("Player2 got item");
             pickedUp = true;
         }
     }
 
+    //讓item manager處理的渲染
     public void render(Graphics graphics) {
-        if(handler == null) {
+        if (handler == null) {
             return;
         }
         render(graphics, x, y);
     }
 
+    //在特定位置渲染
     private void render(Graphics graphics, int x, int y) {
         graphics.drawImage(texture, x, y, ITEM_WIDTH, ITEM_HEIGHT, null);
     }
 
+    //新增item在指定地點
     public Item createItem(int x, int y) {
         Item item = new Item(texture, name, type);
         item.setPosition(x, y);
         return item;
     }
 
+    //設定生成地點
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -75,22 +78,23 @@ public class Item {
         boundingRect.y = y;
     }
 
+    //是否被撿起來
     public boolean isPickedUp() {
         return pickedUp;
     }
 
+    //對應的道具效果
     public void itemEffect(Player player) {
-        if(type == 0) {
+        if (type == 0) {
             player.powerUp(1);
-        }else if(type == 1)
-        {
+        } else if (type == 1) {
             player.speedUp(0.5f);
-        }else if(type == 2) {
+        } else if (type == 2) {
             player.ammoUp(1);
         }
     }
 
-    //getters/setters
+    //getters and setters
     public Handler getHandler() {
         return handler;
     }

@@ -1,8 +1,8 @@
 package Entity.Static;
 
+import Graphics.AssetManager;
 import Texture.Tile;
 import Utility.Handler;
-import Graphics.AssetManager;
 
 import java.awt.*;
 
@@ -24,9 +24,9 @@ public class UnbreakableBox extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(AssetManager.breakableBox, (int)position.x, (int)position.y, width, height, null);
+        graphics.drawImage(AssetManager.breakableBox, (int) position.x, (int) position.y, width, height, null);
         graphics.setColor(Color.CYAN);
-        graphics.fillRect((int)position.x, (int)position.y, boundingRect.width, boundingRect.height);
+        graphics.fillRect((int) position.x, (int) position.y, boundingRect.width, boundingRect.height);
     }
 
     @Override
