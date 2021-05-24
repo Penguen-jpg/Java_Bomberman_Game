@@ -27,23 +27,27 @@ public class BreakableBox extends StaticEntity {
     @Override
     public void render(Graphics graphics) {
         graphics.drawImage(AssetManager.breakableBox, (int) position.x, (int) position.y, width, height, null);
-        graphics.setColor(Color.GREEN);
-        graphics.fillRect((int) position.x, (int) position.y, boundingRect.width, boundingRect.height);
+        /*graphics.setColor(Color.GREEN);
+        graphics.fillRect((int) position.x, (int) position.y, boundingRect.width, boundingRect.height);*/
     }
 
     @Override
     public void onDestroy() {
         Random random = new Random();
-        int itemType = random.nextInt(3);
-        if (itemType == 0) {
+        int drop = random.nextInt(12);
+
+        if (drop >= 3 && drop < 5) {
             handler.getItemManager()
                     .addItem(Item.powerUpItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
-        } else if (itemType == 1) {
+        } else if (drop >= 5 && drop < 9) {
             handler.getItemManager()
                     .addItem(Item.speedUpItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
-        } else if (itemType == 2) {
+        } else if (drop >= 9 && drop < 11) {
             handler.getItemManager()
                     .addItem(Item.ammoUpItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
+        } else if (drop == 12) {
+            handler.getItemManager()
+                    .addItem(Item.penetrationItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
         }
     }
 

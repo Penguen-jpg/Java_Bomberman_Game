@@ -2,8 +2,8 @@ package Texture;
 
 import java.awt.image.BufferedImage;
 
-public class CornerTile extends Tile {
-    public CornerTile(BufferedImage texture, int type) {
+public class WallTile extends Tile {
+    public WallTile(BufferedImage texture, int type) {
         super(texture, type);
     }
 

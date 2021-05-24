@@ -23,6 +23,17 @@ Intellij IDEA Community Edition 2021.1.1
 5. 解決Explosion的碰撞問題(包括與Tile和Entity的碰撞)
 6. 新增註解及修改部分註解
 
+## 更新事項(2021/5/24)
+1. 移除CornerTile class
+2. 新增WallTile class
+3. 替換原本的tile sheet
+4. 移除部分不需要的判定
+5. 縮短爆炸的持續時間
+6. 新增穿透道具
+7. 為道具加上初步的機率設定
+8. 爆炸現在會破壞道具了
+9. 新增基礎箱子物件配置
+
 ---
 
 ## 待完成事項

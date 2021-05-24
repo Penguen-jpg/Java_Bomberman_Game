@@ -1,6 +1,7 @@
 package Item;
 
 import Entity.Creature.Player;
+import Entity.Static.Explosion;
 import Graphics.AssetManager;
 import Utility.Handler;
 
@@ -11,13 +12,16 @@ public class Item {
     //儲存所有種類的item
     public static Item[] items = new Item[30];
     //目前有的item種類
-    public static Item powerUpItem = new Item(AssetManager.unbreakableBox2, "Power_up", 0);
-    public static Item speedUpItem = new Item(AssetManager.unbreakableBox1, "Speed_up", 1);
-    public static Item ammoUpItem = new Item(AssetManager.bottomFloor, "Ammo_up", 2);
+    public static Item powerUpItem = new Item(AssetManager.breakableBox, "Power_up", 0);
+    public static Item speedUpItem = new Item(AssetManager.unbreakableBox, "Speed_up", 1);
+    public static Item ammoUpItem = new Item(AssetManager.floor2, "Ammo_up", 2);
+    public static Item penetrationItem = new Item(AssetManager.wall, "Penetration", 3);
 
     //道具的寬 高
     public static final int ITEM_WIDTH = 32;
     public static final int ITEM_HEIGHT = 32;
+    //記錄剛生成的時間(避免剛生成就被炸彈炸掉)
+    private long spawnTime;
     //是否被撿起來
     private boolean pickedUp;
     protected Handler handler;
@@ -32,13 +36,19 @@ public class Item {
         this.texture = texture;
         this.name = name;
         this.type = type;
+        spawnTime = System.currentTimeMillis();
         pickedUp = false;
         boundingRect = new Rectangle(x, y, ITEM_WIDTH, ITEM_HEIGHT);
-        //將items[tpye]指定給呼叫method的item
+        //將items[type]指定給呼叫method的item
         items[type] = this;
     }
 
     public void tick() {
+        if(System.currentTimeMillis() - spawnTime > 500) {
+            if(checkCollisionWithExplosion()) {
+                return;
+            }
+        }
         if (handler.getEntityManager().getPlayer1().getCollisionRect(0.0f, 0.0f).intersects(boundingRect)) {
             itemEffect(handler.getEntityManager().getPlayer1());
             System.out.println("Player1 got item");
@@ -91,7 +101,21 @@ public class Item {
             player.speedUp(0.5f);
         } else if (type == 2) {
             player.ammoUp(1);
+        } else if(type == 3)
+        {
+            player.setPenetration(true);
         }
+    }
+
+    //檢查與爆炸的碰撞
+    private boolean checkCollisionWithExplosion() {
+        for(Explosion explosion : handler.getEntityManager().getExplosions()) {
+            if(boundingRect.intersects(explosion.getBoundingRect())) {
+                pickedUp = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     //getters and setters

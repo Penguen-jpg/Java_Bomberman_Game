@@ -18,11 +18,11 @@ public class Bomb extends StaticEntity {
     //炸彈威力
     private int power;
     //是否可穿透箱子
-    private boolean pierce;
+    private boolean penetration;
 
 
-    public Bomb(Handler handler, Player player, int power, boolean pierce) {
-        super(handler, player.getPosition().x, player.getPosition().y, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+    public Bomb(Handler handler, Player player, float x, float y, int power, boolean pierce) {
+        super(handler, x, y, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
         this.player = player;
 
         //設定bounding box
@@ -37,7 +37,7 @@ public class Bomb extends StaticEntity {
 
         //設定炸彈數值
         this.power = power;
-        this.pierce = pierce;
+        this.penetration = pierce;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Bomb extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(AssetManager.unbreakableBox2, (int) position.x, (int) position.y
+        graphics.drawImage(AssetManager.unbreakableBox, (int) position.x, (int) position.y
                 , Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
         graphics.setColor(Color.RED);
         graphics.fillRect((int) (position.x + boundingRect.x), (int) (position.y + boundingRect.y)
@@ -65,15 +65,12 @@ public class Bomb extends StaticEntity {
     }
 
     private void explode() {
-        //System.out.println("Bom!!!");
-        if (!destroyed) {
-            //水平爆炸
-            handler.getMap().getEntityManager().addExplosion(new Explosion.HorizontalExplosion(handler, this));
-            //垂直爆炸
-            handler.getMap().getEntityManager().addExplosion(new Explosion.VerticalExplosion(handler, this));
-            player.restoreAmmo();
-            destroyed = true;
-        }
+        //水平爆炸
+        handler.getMap().getEntityManager().addExplosion(new Explosion.HorizontalExplosion(handler, this));
+        //垂直爆炸
+        handler.getMap().getEntityManager().addExplosion(new Explosion.VerticalExplosion(handler, this));
+        player.restoreAmmo();
+        destroyed = true;
     }
 
     //檢查炸彈與其他東西的碰撞
@@ -81,7 +78,7 @@ public class Bomb extends StaticEntity {
         //檢查與entity的碰撞
         for (Entity entity : handler.getEntityManager().getEntities()) {
             //不檢查要放下的玩家
-            if (entity.isDestroyed() || entity.equals(player)) {
+            if (entity.equals(player)) {
                 continue;
             }
 
@@ -93,7 +90,7 @@ public class Bomb extends StaticEntity {
 
         //檢查炸彈之間的碰撞
         for (Bomb bomb : handler.getEntityManager().getBombs()) {
-            if (bomb.isDestroyed() || bomb.equals(this)) {
+            if (bomb.equals(this)) {
                 continue;
             }
 
@@ -115,7 +112,7 @@ public class Bomb extends StaticEntity {
         return player;
     }
 
-    public boolean canPierce() {
-        return pierce;
+    public boolean hasPenetration() {
+        return penetration;
     }
 }

@@ -41,7 +41,7 @@ public abstract class Explosion extends StaticEntity {
         @Override
         public void tick() {
             //爆炸持續0.5秒再結束
-            if (System.currentTimeMillis() - detonateTime > 500) {
+            if (System.currentTimeMillis() - detonateTime > 300) {
                 destroyed = true;
             }
         }
@@ -83,7 +83,7 @@ public abstract class Explosion extends StaticEntity {
                         }
 
                         //如果沒有穿透效果，在碰到第一個箱子時爆炸就會中斷
-                        if (!bomb.canPierce()) {
+                        if (!bomb.hasPenetration()) {
                             break outer;
                         }
                     }
@@ -117,7 +117,7 @@ public abstract class Explosion extends StaticEntity {
         @Override
         public void tick() {
             //爆炸持續0.5秒再結束
-            if (System.currentTimeMillis() - detonateTime > 500) {
+            if (System.currentTimeMillis() - detonateTime > 300) {
                 destroyed = true;
             }
         }
@@ -156,7 +156,7 @@ public abstract class Explosion extends StaticEntity {
                             bound -= yOffset;
                         }
 
-                        if (!bomb.canPierce()) {
+                        if (!bomb.hasPenetration()) {
                             break outer;
                         }
                     }

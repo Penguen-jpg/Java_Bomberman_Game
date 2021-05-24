@@ -40,7 +40,7 @@ public abstract class Entity {
         //檢查entity之間的碰撞
         for (Entity entity : handler.getMap().getEntityManager().getEntities()) {
             //不檢查自己
-            if (entity.destroyed || entity.equals(this)) {
+            if (entity.equals(this)) {
                 continue;
             }
 
@@ -55,8 +55,7 @@ public abstract class Entity {
     //檢查與爆炸的碰撞
     protected void checkCollisionWithExplosion() {
         for (Explosion explosion : handler.getEntityManager().getExplosions()) {
-            if (!explosion.isDestroyed()
-                    && explosion.getBoundingRect().intersects(getCollisionRect(0.0f, 0.0f))) {
+            if (explosion.getBoundingRect().intersects(getCollisionRect(0.0f, 0.0f))) {
                 destroyed = true;
                 return;
             }
