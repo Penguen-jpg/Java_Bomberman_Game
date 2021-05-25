@@ -1,6 +1,13 @@
 # Compiled class file
 *.class
 
+# .idea and iml files
+.idea/
+*.iml
+
+# out directory
+out/
+
 # Log file
 *.log
 
