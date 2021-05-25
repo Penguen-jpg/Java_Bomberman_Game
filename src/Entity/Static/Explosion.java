@@ -3,6 +3,7 @@ package Entity.Static;
 import Entity.Entity;
 import Texture.Tile;
 import Utility.Handler;
+import Graphics.AssetManager;
 
 import java.awt.*;
 
@@ -48,9 +49,11 @@ public abstract class Explosion extends StaticEntity {
 
         @Override
         public void render(Graphics graphics) {
-            graphics.setColor(Color.BLUE);
+            graphics.drawImage(AssetManager.horizontalExplosion, boundingRect.x, boundingRect.y
+                    , boundingRect.width, boundingRect.height, null);
+            /*graphics.setColor(Color.BLUE);
             graphics.fillRect(boundingRect.x, boundingRect.y
-                    , boundingRect.width, boundingRect.height);
+                    , boundingRect.width, boundingRect.height);*/
         }
 
         @Override
@@ -124,9 +127,11 @@ public abstract class Explosion extends StaticEntity {
 
         @Override
         public void render(Graphics graphics) {
-            graphics.setColor(Color.BLUE);
+            graphics.drawImage(AssetManager.verticalExplosion, boundingRect.x, boundingRect.y
+                    , boundingRect.width, boundingRect.height, null);
+            /*graphics.setColor(Color.BLUE);
             graphics.fillRect(boundingRect.x, boundingRect.y
-                    , boundingRect.width, boundingRect.height);
+                    , boundingRect.width, boundingRect.height);*/
         }
 
         @Override

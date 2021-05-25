@@ -23,7 +23,7 @@ public class Player extends Creature {
     private int power;
     private int ammo;
     private int maxAmmo;
-    private boolean penetration;
+    private boolean pierce;
     //避免重複偵測到空白鍵按下
     private long coolDownTimer;
     //紀路放下炸彈的bounding box(目的在於剛放下炸彈時不用做碰撞判定)
@@ -52,7 +52,7 @@ public class Player extends Creature {
         power = 1;
         maxAmmo = 1;
         ammo = maxAmmo;
-        penetration = false;
+        pierce = false;
 
         //設定檢查用變數
         coolDownTimer = 0;
@@ -128,7 +128,7 @@ public class Player extends Creature {
 
     //丟下炸彈
     public void dropBomb(int power) {
-        Bomb bomb = new Bomb(handler, this, position.x, position.y, power, penetration);
+        Bomb bomb = new Bomb(handler, this, position.x, position.y, power, pierce);
         //如果在可以放置的位置才放
         if (!bomb.checkBombCollision()) {
             System.out.println("Bomb pos:" + "(" + bomb.getPosition().x + "," + bomb.getPosition().y + ")");
@@ -188,7 +188,7 @@ public class Player extends Creature {
         ammo = maxAmmo;
     }
 
-    public void setPenetration(boolean penetration) {
-        this.penetration = penetration;
+    public void setPierce(boolean pierce) {
+        this.pierce = pierce;
     }
 }

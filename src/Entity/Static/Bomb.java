@@ -52,11 +52,11 @@ public class Bomb extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(AssetManager.unbreakableBox, (int) position.x, (int) position.y
+        graphics.drawImage(AssetManager.centralExplosion, (int) position.x, (int) position.y
                 , Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
-        graphics.setColor(Color.RED);
+        /*graphics.setColor(Color.RED);
         graphics.fillRect((int) (position.x + boundingRect.x), (int) (position.y + boundingRect.y)
-                , boundingRect.width, boundingRect.height);
+                , boundingRect.width, boundingRect.height);*/
     }
 
     @Override

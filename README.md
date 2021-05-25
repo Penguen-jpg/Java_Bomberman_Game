@@ -34,6 +34,12 @@ Intellij IDEA Community Edition 2021.1.1
 8. 爆炸現在會破壞道具了
 9. 新增基礎箱子物件配置
 
+## 更新事項(2021/5/25)
+1. 替換UnbreakableBox的texture
+2. 降低加速道具的加速效果
+3. 新增VerticalExplosion和HorizontalExplosion的texture
+4. 新增4種Item的texture
+
 ---
 
 ## 待完成事項
@@ -46,8 +52,8 @@ Intellij IDEA Community Edition 2021.1.1
 7. 選地圖(可能會做也可能不會做)
 8. 對戰規則設定 
 9. UI
-10. 新增道具種類並設定生成機率
-11. 幫道具套上texture
+10. ~~新增道具種類並設定生成機率~~
+11. ~~幫道具套上texture~~
 
 ---
 

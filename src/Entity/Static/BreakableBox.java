@@ -38,16 +38,16 @@ public class BreakableBox extends StaticEntity {
 
         if (drop >= 3 && drop < 5) {
             handler.getItemManager()
-                    .addItem(Item.powerUpItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
+                    .addItem(Item.powerUpItem.createItem((int) position.x, (int) position.y));
         } else if (drop >= 5 && drop < 9) {
             handler.getItemManager()
-                    .addItem(Item.speedUpItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
+                    .addItem(Item.speedUpItem.createItem((int) position.x, (int) position.y));
         } else if (drop >= 9 && drop < 11) {
             handler.getItemManager()
-                    .addItem(Item.ammoUpItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
+                    .addItem(Item.ammoUpItem.createItem((int) position.x, (int) position.y));
         } else if (drop == 12) {
             handler.getItemManager()
-                    .addItem(Item.penetrationItem.createItem((int) (position.x + 16), (int) (position.y + 16)));
+                    .addItem(Item.pierceItem.createItem((int) position.x, (int) position.y));
         }
     }
 

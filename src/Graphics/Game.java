@@ -16,7 +16,7 @@ public class Game implements Runnable {
     //視窗用的變數
     private int width, height;
     private String title;
-    //執行續
+    //執行緒
     private Thread thread;
     private boolean running;
     //渲染用
@@ -119,6 +119,7 @@ public class Game implements Runnable {
 
         running = false;
         try {
+            //讓主程式執行緒等待game的執行緒做完動作才能繼續動
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();

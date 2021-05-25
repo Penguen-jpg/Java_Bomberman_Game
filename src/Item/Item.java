@@ -12,14 +12,14 @@ public class Item {
     //儲存所有種類的item
     public static Item[] items = new Item[30];
     //目前有的item種類
-    public static Item powerUpItem = new Item(AssetManager.breakableBox, "Power_up", 0);
-    public static Item speedUpItem = new Item(AssetManager.unbreakableBox, "Speed_up", 1);
-    public static Item ammoUpItem = new Item(AssetManager.floor2, "Ammo_up", 2);
-    public static Item penetrationItem = new Item(AssetManager.wall, "Penetration", 3);
+    public static Item powerUpItem = new Item(AssetManager.powerUp, "Power_up", 0);
+    public static Item speedUpItem = new Item(AssetManager.speedUp, "Speed_up", 1);
+    public static Item ammoUpItem = new Item(AssetManager.ammoUp, "Ammo_up", 2);
+    public static Item pierceItem = new Item(AssetManager.pierce, "Pierce", 3);
 
     //道具的寬 高
-    public static final int ITEM_WIDTH = 32;
-    public static final int ITEM_HEIGHT = 32;
+    public static final int ITEM_WIDTH = 64;
+    public static final int ITEM_HEIGHT = 64;
     //記錄剛生成的時間(避免剛生成就被炸彈炸掉)
     private long spawnTime;
     //是否被撿起來
@@ -98,12 +98,12 @@ public class Item {
         if (type == 0) {
             player.powerUp(1);
         } else if (type == 1) {
-            player.speedUp(0.5f);
+            player.speedUp(0.2f);
         } else if (type == 2) {
             player.ammoUp(1);
         } else if(type == 3)
         {
-            player.setPenetration(true);
+            player.setPierce(true);
         }
     }
 
