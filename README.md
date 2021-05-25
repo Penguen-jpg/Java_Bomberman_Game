@@ -39,6 +39,7 @@ Intellij IDEA Community Edition 2021.1.1
 2. 降低加速道具的加速效果
 3. 新增VerticalExplosion和HorizontalExplosion的texture
 4. 新增4種Item的texture
+5. 新增UI雛形
 
 ---
 
@@ -51,9 +52,10 @@ Intellij IDEA Community Edition 2021.1.1
 6. 做選單
 7. 選地圖(可能會做也可能不會做)
 8. 對戰規則設定 
-9. UI
+9. ~~UI雛形~~
 10. ~~新增道具種類並設定生成機率~~
 11. ~~幫道具套上texture~~
+12. 設計完整UI
 
 ---
 

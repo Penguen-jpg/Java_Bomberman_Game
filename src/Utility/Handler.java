@@ -7,6 +7,7 @@ import Input.KeyboardManager;
 import Input.MouseManager;
 import Item.ItemManager;
 import Maps.Map;
+import States.StateManager;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -30,6 +31,10 @@ public class Handler {
 
     public MouseManager getMouseManager() {
         return game.getMouseManager();
+    }
+
+    public StateManager getStateManager() {
+        return game.getStateManager();
     }
 
     public EntityManager getEntityManager() {
