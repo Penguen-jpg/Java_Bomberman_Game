@@ -32,6 +32,8 @@ public class Game implements Runnable {
     private MouseManager mouseManager;
     //Handler
     private Handler handler;
+    //遊戲是否結束
+    private boolean gameOver;
 
     public Game(String title, int width, int height) {
         this.title = title;
@@ -54,6 +56,7 @@ public class Game implements Runnable {
         window.getFrame().addKeyListener(keyboardManagers.get(1));
         stateManager = new StateManager(handler);
         stateManager.setCurrentState(stateManager.menuState);
+        gameOver = false;
     }
 
     //更新
@@ -126,6 +129,15 @@ public class Game implements Runnable {
         }
     }
 
+    public synchronized void restart() {
+        stateManager.menuState.init();
+        stateManager.setCurrentState(stateManager.menuState);
+        handler.getEntityManager().destroyAll();
+        handler.getItemManager().destroyAll();
+        stateManager.gameState.init();
+        gameOver = false;
+    }
+
     //getters and setters
     public KeyboardManager getKeyboardManager(int index) {
         return keyboardManagers.get(index);
@@ -147,13 +159,21 @@ public class Game implements Runnable {
         return height;
     }
 
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
     public void setKeyboardManagers() {
         keyboardManagers = new ArrayList<>();
 
-        KeyboardManager manager1 = new KeyboardManager(handler.getKeys(0));
-        KeyboardManager manager2 = new KeyboardManager(handler.getKeys(1));
+        KeyboardManager manager1 = new KeyboardManager(handler ,handler.getKeys(0));
+        KeyboardManager manager2 = new KeyboardManager(handler, handler.getKeys(1));
 
         keyboardManagers.add(manager1);
         keyboardManagers.add(manager2);
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 }

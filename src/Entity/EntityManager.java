@@ -4,6 +4,8 @@ import Entity.Creature.Player;
 import Entity.Static.Bomb;
 import Entity.Static.Explosion;
 import Utility.Handler;
+import Utility.Text;
+import Graphics.AssetManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -90,6 +92,20 @@ public class EntityManager {
         for (Explosion explosion : explosions) {
             explosion.render(graphics);
         }
+
+        if(player1.destroyed) {
+            Text.drawText(graphics, "PLAYER 2 WINS!!!", handler.getGame().getWidth() / 2
+                    , handler.getGame().getHeight() / 4, true, Color.WHITE, AssetManager.font120);
+            Text.drawText(graphics, "PRESS ESC TO BACK TO MENU", handler.getGame().getWidth() / 2
+                    , handler.getGame().getHeight() / 2, true, Color.WHITE, AssetManager.font120);
+            handler.getGame().setGameOver(true);
+        }else if(handler.getEntityManager().getPlayer2().isDestroyed()) {
+            Text.drawText(graphics, "PLAYER 1 WINS!!!", handler.getGame().getWidth() / 2
+                    , handler.getGame().getHeight() / 4, true, Color.WHITE, AssetManager.font120);
+            Text.drawText(graphics, "PRESS ESC TO BACK TO MENU", handler.getGame().getWidth() / 2
+                    , handler.getGame().getHeight() / 2, true, Color.WHITE, AssetManager.font120);
+            handler.getGame().setGameOver(true);
+        }
     }
 
     public void addEntity(Entity entity) {
@@ -102,6 +118,13 @@ public class EntityManager {
 
     public void addExplosion(Explosion explosion) {
         explosions.add(explosion);
+    }
+
+    //摧毀所有entity
+    public void destroyAll() {
+        for(Entity entity : entities) {
+            entity.destroyed = true;
+        }
     }
 
     //getters and setters

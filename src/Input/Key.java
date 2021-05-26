@@ -7,4 +7,5 @@ public class Key {
     public static Key left = new Key();
     public static Key right = new Key();
     public static Key action = new Key();
+    public static Key toMenu = new Key();
 }

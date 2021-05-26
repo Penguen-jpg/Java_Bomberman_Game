@@ -35,6 +35,12 @@ public class ItemManager {
         }
     }
 
+    public void destroyAll() {
+        for(Item item : items) {
+            item.setPickedUp(true);
+        }
+    }
+
     //加入新的item
     public void addItem(Item item) {
         item.setHandler(handler);
@@ -44,5 +50,9 @@ public class ItemManager {
     //getters
     public Handler getHandler() {
         return handler;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
     }
 }

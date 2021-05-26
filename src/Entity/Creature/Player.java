@@ -5,6 +5,8 @@ import Graphics.Animation;
 import Input.KeyboardManager;
 import Texture.Tile;
 import Utility.Handler;
+import Utility.Text;
+import Graphics.AssetManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -48,16 +50,8 @@ public class Player extends Creature {
         leftAnimation = new Animation(500, assets[2]);
         rightAnimation = new Animation(500, assets[3]);
 
-        //設定炸彈數值
-        power = 1;
-        maxAmmo = 1;
-        ammo = maxAmmo;
-        pierce = false;
-
-        //設定檢查用變數
-        coolDownTimer = 0;
-        bombRect = new Rectangle(0, 0, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
-        justDrop = false;
+        //初始化
+        init(x, y);
     }
 
     @Override
@@ -86,6 +80,25 @@ public class Player extends Creature {
     @Override
     public void onDestroy() {
         System.out.println("Player" + id + " lose");
+    }
+
+    public void init(float x, float y) {
+        //設定初始位置
+        position.x = x;
+        position.y = y;
+
+        //設定初始數值
+        speed = DEFAULT_SPEED;
+        power = 1;
+        maxAmmo = 1;
+        ammo = maxAmmo;
+        pierce = false;
+
+        //設定檢查用變數
+        destroyed = false;
+        coolDownTimer = 0;
+        bombRect = new Rectangle(0, 0, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+        justDrop = false;
     }
 
     //根據輸入做出對應動作
@@ -131,13 +144,13 @@ public class Player extends Creature {
         Bomb bomb = new Bomb(handler, this, position.x, position.y, power, pierce);
         //如果在可以放置的位置才放
         if (!bomb.checkBombCollision()) {
-            System.out.println("Bomb pos:" + "(" + bomb.getPosition().x + "," + bomb.getPosition().y + ")");
+            //System.out.println("Bomb pos:" + "(" + bomb.getPosition().x + "," + bomb.getPosition().y + ")");
             bombRect = bomb.getCollisionRect(0.0f, 0.0f);
             justDrop = true;
             handler.getMap().getEntityManager().addBomb(bomb);
             ammo--;
         } else {
-            System.out.println("Bomb collides with other entities");
+            //System.out.println("Bomb collides with other entities");
         }
     }
 
@@ -167,7 +180,7 @@ public class Player extends Creature {
 
         for (Bomb bomb : handler.getMap().getEntityManager().getBombs()) {
             if (bomb.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(xOffset, yOffset))) {
-                System.out.println("Player collides with bomb");
+                //System.out.println("Player collides with bomb");
                 return true;
             }
         }

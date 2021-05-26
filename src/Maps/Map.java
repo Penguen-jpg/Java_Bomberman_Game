@@ -1,5 +1,6 @@
 package Maps;
 
+import Entity.Creature.Creature;
 import Entity.Creature.Player;
 import Entity.EntityManager;
 import Entity.Static.BreakableBox;
@@ -29,24 +30,27 @@ public class Map {
         this.handler = handler;
         loadMap(path);
         entityManager = new EntityManager(handler,
-                new Player(handler, 0.0f, 0.0f, handler.getKeyboardManager(0), AssetManager.player1Animation, 1),
-                new Player(handler, 200.0f, 0.0f, handler.getKeyboardManager(1), AssetManager.player1Animation, 2));
-        entityManager.getPlayer1().setPosition(spawnX1, spawnY1);
-        entityManager.getPlayer2().setPosition(spawnX2, spawnY2);
+                new Player(handler, spawnX1, spawnY1
+                        , handler.getKeyboardManager(0), AssetManager.player1Animation, 1),
+                new Player(handler, spawnX2, spawnY2
+                        , handler.getKeyboardManager(1), AssetManager.player1Animation, 2));
         placeBoxes();
 
-        /*entityManager.addEntity(new BreakableBox(handler, 64.0f, 170.0f));
-        entityManager.addEntity(new BreakableBox(handler, 128.0f, 170.0f));
-        entityManager.addEntity(new BreakableBox(handler, 170.0f, 170.0f));
-        entityManager.addEntity(new BreakableBox(handler, 300.0f, 150.0f));
-        entityManager.addEntity(new BreakableBox(handler, 512.0f, 192.0f));
-        entityManager.addEntity(new BreakableBox(handler, 576.0f, 192.0f));
-        entityManager.addEntity(new BreakableBox(handler, 640.0f, 192.0f));
-        entityManager.addEntity(new UnbreakableBox(handler, 600.0f, 400.0f));
-        entityManager.addEntity(new UnbreakableBox(handler, 450.0f, 400.0f));
-        entityManager.addEntity(new UnbreakableBox(handler, 380.0f, 400.0f));*/
-
         itemManager = new ItemManager(handler);
+    }
+
+    //研究中，可能不會用到
+    public void init() {
+        if(entityManager.getPlayer1().isDestroyed() || entityManager.getPlayer2().isDestroyed()) {
+            entityManager.getPlayer1().init(spawnX1, spawnY1);
+            entityManager.getPlayer2().init(spawnX2, spawnY2);
+            entityManager.addEntity(entityManager.getPlayer1());
+            entityManager.addEntity(entityManager.getPlayer2());
+            entityManager.getPlayer1().setSpeed(3.0f);
+            entityManager.getPlayer2().setSpeed(3.0f);
+        }
+
+        placeBoxes();
     }
 
     private void loadMap(String path) {
@@ -61,6 +65,7 @@ public class Map {
 
         tileTypes = new int[width][height];
         tiles = new Tile[width][height];
+        layout = new char[width][height];
 
         //設定tile
         for (int y = 0; y < height; y++) {
@@ -89,8 +94,6 @@ public class Map {
 
     //設定要新增的box的位置
     private void createBasicLayout() {
-        layout = new char[width][height];
-
         //x:no box here, b:breakable box, u:unbreakable box
         for (int y = 1; y < height - 1; y++) {
             for (int x = 1; x < width - 1; x++) {

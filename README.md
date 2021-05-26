@@ -41,6 +41,13 @@ Intellij IDEA Community Edition 2021.1.1
 4. 新增4種Item的texture
 5. 新增UI雛形
 
+## 更新事項(2021/5/26)
+1. 新增FontLoader class，用來讀取字體
+2. 新增Sliver字體
+3. 現在角色死亡時，會顯示另一個玩家獲勝的訊息
+4. 新增遊戲結束的判定
+5. 遊戲結束時，按下ESC可回到主選單(會有訊息提示)
+
 ---
 
 ## 待完成事項
@@ -56,13 +63,17 @@ Intellij IDEA Community Edition 2021.1.1
 10. ~~新增道具種類並設定生成機率~~
 11. ~~幫道具套上texture~~
 12. 設計完整UI
+13. ~~勝利訊息~~
+14. 回選單後，地圖重製(可能做也可能不會做)
 
 ---
 
 ## 素材連結
 1. 參考的Youtube教學:
 https://youtube.com/playlist?list=PLah6faXAgguMnTBs3JnEJY0shAc18XYQZ
-2. 遊戲內的Tile
+2. 遊戲內的Tile:
 https://free-game-assets.itch.io/free-industrial-zone-tileset-pixel-art
-3. 幫了大忙的參考作品
+3. 遊戲內的字體:
+https://poppyworks.itch.io/silver
+4. 幫了大忙的參考作品:
 https://github.com/blai30/bomberman-java

@@ -2,6 +2,8 @@ package States;
 
 import Maps.Map;
 import Utility.Handler;
+import Utility.Text;
+import Graphics.AssetManager;
 
 import java.awt.*;
 
@@ -22,5 +24,10 @@ public class GameState extends State {
     @Override
     public void render(Graphics graphics) {
         map.render(graphics);
+    }
+
+    @Override
+    public void init() {
+        map.init();
     }
 }

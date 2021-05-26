@@ -5,6 +5,7 @@ import Utility.Handler;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import Graphics.AssetManager;
 
 public class UIManager {
     private Handler handler;

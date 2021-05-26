@@ -1,5 +1,7 @@
 package Input;
 
+import Utility.Handler;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
@@ -10,7 +12,10 @@ public class KeyboardManager implements KeyListener {
     //對應上下左右
     public boolean up, down, left, right, action;
 
-    public KeyboardManager(HashMap<Integer, Key> keys) {
+    private Handler handler;
+
+    public KeyboardManager(Handler handler, HashMap<Integer, Key> keys) {
+        this.handler = handler;
         this.keys = keys;
     }
 
@@ -31,6 +36,11 @@ public class KeyboardManager implements KeyListener {
             right = true;
         } else if (keys.get(e.getKeyCode()) == Key.action) {
             action = true;
+        } else if(keys.get(e.getKeyCode()) == Key.toMenu) {
+            if(handler.getGame().isGameOver()) {
+                System.out.println("Re");
+                handler.getGame().restart();
+            }
         }
     }
 

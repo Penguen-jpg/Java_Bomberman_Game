@@ -93,6 +93,7 @@ public class Handler {
         keys1.put(KeyEvent.VK_LEFT, Key.left);
         keys1.put(KeyEvent.VK_RIGHT, Key.right);
         keys1.put(KeyEvent.VK_SPACE, Key.action);
+        keys1.put(KeyEvent.VK_ESCAPE, Key.toMenu);
 
         //玩家2的操作方法
         keys2.put(KeyEvent.VK_W, Key.up);

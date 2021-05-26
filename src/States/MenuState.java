@@ -30,7 +30,7 @@ public class MenuState extends State {
     @Override
     public void tick() {
         /*if (handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed()) {
-            handler.getGame().getStateManager().setCurrentState(handler.getGame().getStateManager().gameState);
+            handler.getGame().getStateManager().setCurrentState(handler.getStateManager().gameState);
         }*/
         uiManager.tick();
     }
@@ -40,5 +40,10 @@ public class MenuState extends State {
         /*graphics.setColor(Color.BLUE);
         graphics.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 8, 8);*/
         uiManager.render(graphics);
+    }
+
+    @Override
+    public void init() {
+        handler.getMouseManager().setUIManager(uiManager);
     }
 }

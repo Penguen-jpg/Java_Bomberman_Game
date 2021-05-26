@@ -2,12 +2,14 @@ package Graphics;
 
 import Texture.SpriteSheet;
 
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 public class AssetManager {
     private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32;
     private static final int ITEM_WIDTH = 64, ITEM_HEIGHT = 64;
+    public static Font font120;
     public static BufferedImage breakableBox, unbreakableBox, floor1, floor2, wall;
     public static BufferedImage[][] player1Animation;
     public static BufferedImage[][] player2Animation;
@@ -17,6 +19,9 @@ public class AssetManager {
     public static BufferedImage powerUp, speedUp, ammoUp, pierce;
 
     public static void init() {
+        //font
+        font120 = FontLoader.loadFont("src/res/fonts/Silver.ttf", 120);
+
         SpriteSheet tileSheet = new SpriteSheet(ImageLoader.loadImage("/textures/tile_sheet3.png"));
         SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
         SpriteSheet explosionSheet = new SpriteSheet(ImageLoader.loadImage("/textures/explosion_sheet.png"));
