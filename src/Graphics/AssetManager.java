@@ -9,6 +9,7 @@ public class AssetManager {
     private static final int TILE_WIDTH = 32, TILE_HEIGHT = 32;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32;
     private static final int ITEM_WIDTH = 64, ITEM_HEIGHT = 64;
+    private static final int BUTTON_WIDTH = 128, BUTTON_HEIGHT = 64;
     public static Font font120;
     public static BufferedImage breakableBox, unbreakableBox, floor1, floor2, wall;
     public static BufferedImage[][] player1Animation;
@@ -17,6 +18,7 @@ public class AssetManager {
     public static BufferedImage horizontalExplosion;
     public static BufferedImage verticalExplosion;
     public static BufferedImage powerUp, speedUp, ammoUp, pierce;
+    public static BufferedImage[] startButton, exitButton;
 
     public static void init() {
         //font
@@ -26,6 +28,7 @@ public class AssetManager {
         SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
         SpriteSheet explosionSheet = new SpriteSheet(ImageLoader.loadImage("/textures/explosion_sheet.png"));
         SpriteSheet itemSheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
+        SpriteSheet buttonSheet = new SpriteSheet(ImageLoader.loadImage("/textures/button_sheet.png"));
 
         //player
         player1Animation = new BufferedImage[4][2];
@@ -55,5 +58,13 @@ public class AssetManager {
         speedUp = itemSheet.clip(0, ITEM_HEIGHT, ITEM_WIDTH, ITEM_HEIGHT);
         ammoUp = itemSheet.clip(0, ITEM_HEIGHT * 2, ITEM_WIDTH, ITEM_HEIGHT);
         pierce = itemSheet.clip(ITEM_WIDTH * 2, 0, ITEM_WIDTH, ITEM_HEIGHT);
+
+        //button
+        startButton = new BufferedImage[2];
+        exitButton = new BufferedImage[2];
+        startButton[0] = buttonSheet.clip(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
+        startButton[1] = buttonSheet.clip(BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
+        exitButton[0] = buttonSheet.clip(0, BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+        exitButton[1] = buttonSheet.clip(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 }
