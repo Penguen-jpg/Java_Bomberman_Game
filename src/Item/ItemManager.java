@@ -36,7 +36,7 @@ public class ItemManager {
     }
 
     public void destroyAll() {
-        for(Item item : items) {
+        for (Item item : items) {
             item.setPickedUp(true);
         }
     }

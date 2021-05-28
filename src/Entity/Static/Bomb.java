@@ -2,6 +2,7 @@ package Entity.Static;
 
 import Entity.Creature.Player;
 import Entity.Entity;
+import Graphics.Animation;
 import Graphics.AssetManager;
 import Texture.Tile;
 import Utility.Handler;
@@ -19,6 +20,8 @@ public class Bomb extends StaticEntity {
     private int power;
     //是否可穿透箱子
     private boolean penetration;
+    //動畫
+    private Animation bombAnimation;
 
 
     public Bomb(Handler handler, Player player, float x, float y, int power, boolean pierce) {
@@ -31,6 +34,9 @@ public class Bomb extends StaticEntity {
         boundingRect.width = Tile.TILE_WIDTH;
         boundingRect.height = Tile.TILE_HEIGHT;
 
+        //設定動畫
+        bombAnimation = new Animation(500, AssetManager.bombAnimation);
+
         //設定計時器
         timer = 0;
         droppedTime = System.currentTimeMillis();
@@ -42,6 +48,7 @@ public class Bomb extends StaticEntity {
 
     @Override
     public void tick() {
+        bombAnimation.tick();
         //計時
         timer = System.currentTimeMillis() - droppedTime;
 
@@ -52,7 +59,7 @@ public class Bomb extends StaticEntity {
 
     @Override
     public void render(Graphics graphics) {
-        graphics.drawImage(AssetManager.centralExplosion, (int) position.x, (int) position.y
+        graphics.drawImage(bombAnimation.getCurrentFrame(), (int) position.x, (int) position.y
                 , Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
         /*graphics.setColor(Color.RED);
         graphics.fillRect((int) (position.x + boundingRect.x), (int) (position.y + boundingRect.y)

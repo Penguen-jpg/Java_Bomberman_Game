@@ -11,7 +11,6 @@ public class KeyboardManager implements KeyListener {
     private HashMap<Integer, Key> keys;
     //對應上下左右
     public boolean up, down, left, right, action;
-
     private Handler handler;
 
     public KeyboardManager(Handler handler, HashMap<Integer, Key> keys) {
@@ -24,6 +23,7 @@ public class KeyboardManager implements KeyListener {
 
     }
 
+    //按下按鍵
     @Override
     public void keyPressed(KeyEvent e) {
         if (keys.get(e.getKeyCode()) == Key.up) {
@@ -36,14 +36,14 @@ public class KeyboardManager implements KeyListener {
             right = true;
         } else if (keys.get(e.getKeyCode()) == Key.action) {
             action = true;
-        } else if(keys.get(e.getKeyCode()) == Key.toMenu) {
-            if(handler.getGame().isGameOver()) {
-                System.out.println("Re");
+        } else if (keys.get(e.getKeyCode()) == Key.toMenu) {
+            if (handler.getGame().isGameOver()) {
                 handler.getGame().restart();
             }
         }
     }
 
+    //放開按鍵
     @Override
     public void keyReleased(KeyEvent e) {
         if (keys.get(e.getKeyCode()) == Key.up) {

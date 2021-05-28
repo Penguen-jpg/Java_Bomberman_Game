@@ -1,10 +1,10 @@
 package States;
 
+import Graphics.AssetManager;
 import UI.ClickListener;
 import UI.UIImageButton;
 import UI.UIManager;
 import Utility.Handler;
-import Graphics.AssetManager;
 
 import java.awt.*;
 
@@ -16,8 +16,9 @@ public class MenuState extends State {
 
         uiManager = new UIManager(handler);
         handler.getMouseManager().setUIManager(uiManager);
-        //新增按鈕
-        uiManager.addObject(new UIImageButton(200, 200, 128, 64, AssetManager.startButton
+
+        //開始按鈕
+        uiManager.addObject(new UIImageButton(302, 438, 128, 64, AssetManager.startButton
                 , new ClickListener() {
             @Override
             public void onClick() {
@@ -25,20 +26,25 @@ public class MenuState extends State {
                 handler.getStateManager().setCurrentState(handler.getStateManager().gameState);
             }
         }));
+
+        //結束按鈕
+        uiManager.addObject(new UIImageButton(530, 438, 128, 64, AssetManager.exitButton
+                , new ClickListener() {
+            @Override
+            public void onClick() {
+                handler.getMouseManager().setUIManager(null);
+                System.exit(0);
+            }
+        }));
     }
 
     @Override
     public void tick() {
-        /*if (handler.getMouseManager().isLeftPressed() && handler.getMouseManager().isRightPressed()) {
-            handler.getGame().getStateManager().setCurrentState(handler.getStateManager().gameState);
-        }*/
         uiManager.tick();
     }
 
     @Override
     public void render(Graphics graphics) {
-        /*graphics.setColor(Color.BLUE);
-        graphics.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 8, 8);*/
         uiManager.render(graphics);
     }
 

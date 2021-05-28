@@ -1,14 +1,17 @@
 # Java_Bomberman_Game
 
 ## IDE
+
 Intellij IDEA Community Edition 2021.1.1
 
 ## 更新事項(2021/5/21)
+
 1. 取代原本的tile，換上新的tile
 2. 刪除用不到的class，並新增FloorTile和CornerTile以取代
 3. 將原有地圖換上為新的tile
 
 ## 更新事項(2021/5/22)
+
 1. 修正炸彈的放置位置(現在會準確的放在格子上)
 2. 修正StaticEntity的放置位置(現在會準確的放在格子上)
 3. 修改Explosion與Tile碰撞的判斷方式
@@ -16,6 +19,7 @@ Intellij IDEA Community Edition 2021.1.1
 5. 取消Tile的bounding box(效果不好)
 
 ## 更新事項(2021/5/23)
+
 1. 新增Item雛形
 2. 取消Creature的血量設定
 3. 現在可以移除被破壞的entity了
@@ -24,6 +28,7 @@ Intellij IDEA Community Edition 2021.1.1
 6. 新增註解及修改部分註解
 
 ## 更新事項(2021/5/24)
+
 1. 移除CornerTile class
 2. 新增WallTile class
 3. 替換原本的tile sheet
@@ -35,6 +40,7 @@ Intellij IDEA Community Edition 2021.1.1
 9. 新增基礎箱子物件配置
 
 ## 更新事項(2021/5/25)
+
 1. 替換UnbreakableBox的texture
 2. 降低加速道具的加速效果
 3. 新增VerticalExplosion和HorizontalExplosion的texture
@@ -42,38 +48,48 @@ Intellij IDEA Community Edition 2021.1.1
 5. 新增UI雛形
 
 ## 更新事項(2021/5/26)
+
 1. 新增FontLoader class，用來讀取字體
 2. 新增Sliver字體
 3. 現在角色死亡時，會顯示另一個玩家獲勝的訊息
 4. 新增遊戲結束的判定
 5. 遊戲結束時，按下ESC可回到主選單(會有訊息提示)
 
+## 更新事項(2021/5/28)
+
+1. 完成主選單UI
+2. 替角色及炸彈套上texture
+3. 新增角色及炸彈動畫
+4. 新增註解
+
 ---
 
-## 待完成事項
+## 待完成事項(重要事項基本上處理完畢)
+
 1. ~~處理Explosion無法碰撞到Entity的問題~~
-2. 將角色以及炸彈的sprite替換上去
+2. ~~將角色以及炸彈的texture替換上去~~
 3. ~~處理Player與Tile的碰撞判定(精準度已經足夠，希望能換更有效的判斷方式)~~
 4. ~~道具(火力強化、移動速度增加...)雛形~~
 5. 設計地圖
-6. 做選單
+6. 做選單(可能做也可能不會做)
 7. 選地圖(可能會做也可能不會做)
-8. 對戰規則設定 
+8. ~~對戰規則設定~~
 9. ~~UI雛形~~
 10. ~~新增道具種類並設定生成機率~~
 11. ~~幫道具套上texture~~
-12. 設計完整UI
+12. ~~設計主選單UI~~
 13. ~~勝利訊息~~
 14. 回選單後，地圖重製(可能做也可能不會做)
 
 ---
 
 ## 素材連結
+
 1. 參考的Youtube教學:
-https://youtube.com/playlist?list=PLah6faXAgguMnTBs3JnEJY0shAc18XYQZ
+   https://youtube.com/playlist?list=PLah6faXAgguMnTBs3JnEJY0shAc18XYQZ
 2. 遊戲內的Tile:
-https://free-game-assets.itch.io/free-industrial-zone-tileset-pixel-art
+   https://free-game-assets.itch.io/free-industrial-zone-tileset-pixel-art
 3. 遊戲內的字體:
-https://poppyworks.itch.io/silver
+   https://poppyworks.itch.io/silver
 4. 幫了大忙的參考作品:
-https://github.com/blai30/bomberman-java
+   https://github.com/blai30/bomberman-java

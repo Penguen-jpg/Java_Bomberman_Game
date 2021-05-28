@@ -1,9 +1,9 @@
 package Entity.Static;
 
 import Entity.Entity;
+import Graphics.AssetManager;
 import Texture.Tile;
 import Utility.Handler;
-import Graphics.AssetManager;
 
 import java.awt.*;
 
@@ -112,8 +112,6 @@ public abstract class Explosion extends StaticEntity {
             boundingRect.y = (int) upperY;
             boundingRect.width = Tile.TILE_WIDTH;
             boundingRect.height = (int) (lowerY - upperY) + Tile.TILE_HEIGHT;//多加一個是為了補上中間的那格
-
-            System.out.println(boundingRect);
         }
 
 

@@ -6,7 +6,6 @@ public class Timer {
     private double deltaTime = 0.0;//呼叫下次tick和render前還有多少時間
     private long now;//這張畫面開始的時間
     private long lastTime = System.nanoTime();//上一張畫面開始的時間
-    public int ticks = 0;//目前做了幾次tick
 
     //檢查是否要呼叫tick和render
     public boolean check() {

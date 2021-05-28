@@ -1,6 +1,5 @@
 package Maps;
 
-import Entity.Creature.Creature;
 import Entity.Creature.Player;
 import Entity.EntityManager;
 import Entity.Static.BreakableBox;
@@ -41,14 +40,10 @@ public class Map {
 
     //研究中，可能不會用到
     public void init() {
-        if(entityManager.getPlayer1().isDestroyed() || entityManager.getPlayer2().isDestroyed()) {
-            entityManager.getPlayer1().init(spawnX1, spawnY1);
-            entityManager.getPlayer2().init(spawnX2, spawnY2);
-            entityManager.addEntity(entityManager.getPlayer1());
-            entityManager.addEntity(entityManager.getPlayer2());
-            entityManager.getPlayer1().setSpeed(3.0f);
-            entityManager.getPlayer2().setSpeed(3.0f);
-        }
+        entityManager.setPlayer1(new Player(handler, spawnX1, spawnY1
+                , handler.getKeyboardManager(0), AssetManager.player1Animation, 1));
+        entityManager.setPlayer2(new Player(handler, spawnX2, spawnY2
+                , handler.getKeyboardManager(1), AssetManager.player1Animation, 2));
 
         placeBoxes();
     }

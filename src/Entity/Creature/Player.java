@@ -5,8 +5,6 @@ import Graphics.Animation;
 import Input.KeyboardManager;
 import Texture.Tile;
 import Utility.Handler;
-import Utility.Text;
-import Graphics.AssetManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,6 +17,7 @@ public class Player extends Creature {
     private Animation upAnimation;
     private Animation leftAnimation;
     private Animation rightAnimation;
+    private Animation idleAnimation;
     //玩家id
     private int id;
     //炸彈數值
@@ -45,10 +44,11 @@ public class Player extends Creature {
         boundingRect.height = 33;
 
         //設定動畫
-        upAnimation = new Animation(500, assets[0]);
-        downAnimation = new Animation(500, assets[1]);
-        leftAnimation = new Animation(500, assets[2]);
-        rightAnimation = new Animation(500, assets[3]);
+        upAnimation = new Animation(150, assets[0]);
+        downAnimation = new Animation(150, assets[1]);
+        rightAnimation = new Animation(150, assets[2]);
+        leftAnimation = new Animation(150, assets[3]);
+        idleAnimation = new Animation(200, assets[4]);
 
         //初始化
         init(x, y);
@@ -60,6 +60,7 @@ public class Player extends Creature {
         upAnimation.tick();
         leftAnimation.tick();
         rightAnimation.tick();
+        idleAnimation.tick();
         getInput();
         checkCollisionWithExplosion();
         move();
@@ -68,8 +69,6 @@ public class Player extends Creature {
     @Override
     public void render(Graphics graphics) {
         graphics.drawImage(getCurrentAnimationFrame(), (int) position.x, (int) position.y, width, height, null);
-        //Rectangle temp = new Rectangle(256, 192, 64, 192);
-        //Rectangle temp2 = new Rectangle(143, 79, 19, 33);
 
         //畫出碰撞區域
         /*graphics.setColor(Color.RED);
@@ -79,7 +78,7 @@ public class Player extends Creature {
 
     @Override
     public void onDestroy() {
-        System.out.println("Player" + id + " lose");
+
     }
 
     public void init(float x, float y) {
@@ -134,8 +133,10 @@ public class Player extends Creature {
             return leftAnimation.getCurrentFrame();
         } else if (velocity.y < 0.0f) {
             return upAnimation.getCurrentFrame();
-        } else {
+        } else if (velocity.y > 0.0f) {
             return downAnimation.getCurrentFrame();
+        } else {
+            return idleAnimation.getCurrentFrame();
         }
     }
 

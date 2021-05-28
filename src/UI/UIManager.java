@@ -5,7 +5,6 @@ import Utility.Handler;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import Graphics.AssetManager;
 
 public class UIManager {
     private Handler handler;
@@ -25,7 +24,7 @@ public class UIManager {
         for (UIObject object : uiObjects)
             object.render(graphics);
     }
-
+    
     public void onMouseMove(MouseEvent e) {
         for (UIObject object : uiObjects)
             object.onMouseMove(e);

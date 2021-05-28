@@ -11,6 +11,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     private int mouseX, mouseY;
     private UIManager uiManager;
 
+    //按下按鍵
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -20,6 +21,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
         }
     }
 
+    //放開按鍵
     @Override
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -28,7 +30,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
             rightPressed = false;
         }
 
-        if(uiManager != null) {
+        if (uiManager != null) {
             uiManager.onMouseRelease(e);
         }
     }
@@ -37,7 +39,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        if(uiManager != null) {
+        if (uiManager != null) {
             uiManager.onMouseMove(e);
         }
     }

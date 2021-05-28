@@ -29,8 +29,7 @@ public abstract class UIObject {
     public void onMouseMove(MouseEvent e) {
         if (boundingRect.contains(e.getX(), e.getY())) {
             hovering = true;
-        }
-        else {
+        } else {
             hovering = false;
         }
     }

@@ -9,7 +9,7 @@ public class Text {
         graphics.setFont(font);
 
         //如果要置中
-        if(center) {
+        if (center) {
             //取得關於font的資訊
             FontMetrics metrics = graphics.getFontMetrics(font);
             x = x - metrics.stringWidth(text) / 2;

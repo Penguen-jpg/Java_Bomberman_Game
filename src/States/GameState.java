@@ -2,8 +2,6 @@ package States;
 
 import Maps.Map;
 import Utility.Handler;
-import Utility.Text;
-import Graphics.AssetManager;
 
 import java.awt.*;
 

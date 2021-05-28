@@ -98,7 +98,6 @@ public class Game implements Runnable {
             if (timer.check()) {
                 tick();
                 render();
-                timer.ticks++;
             }
         }
 
@@ -129,7 +128,8 @@ public class Game implements Runnable {
         }
     }
 
-    public synchronized void restart() {
+    //重新開始遊戲
+    public void restart() {
         stateManager.menuState.init();
         stateManager.setCurrentState(stateManager.menuState);
         handler.getEntityManager().destroyAll();
@@ -166,7 +166,7 @@ public class Game implements Runnable {
     public void setKeyboardManagers() {
         keyboardManagers = new ArrayList<>();
 
-        KeyboardManager manager1 = new KeyboardManager(handler ,handler.getKeys(0));
+        KeyboardManager manager1 = new KeyboardManager(handler, handler.getKeys(0));
         KeyboardManager manager2 = new KeyboardManager(handler, handler.getKeys(1));
 
         keyboardManagers.add(manager1);

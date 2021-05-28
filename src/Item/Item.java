@@ -44,8 +44,8 @@ public class Item {
     }
 
     public void tick() {
-        if(System.currentTimeMillis() - spawnTime > 500) {
-            if(checkCollisionWithExplosion()) {
+        if (System.currentTimeMillis() - spawnTime > 500) {
+            if (checkCollisionWithExplosion()) {
                 return;
             }
         }
@@ -101,16 +101,15 @@ public class Item {
             player.speedUp(0.2f);
         } else if (type == 2) {
             player.ammoUp(1);
-        } else if(type == 3)
-        {
+        } else if (type == 3) {
             player.setPierce(true);
         }
     }
 
     //檢查與爆炸的碰撞
     private boolean checkCollisionWithExplosion() {
-        for(Explosion explosion : handler.getEntityManager().getExplosions()) {
-            if(boundingRect.intersects(explosion.getBoundingRect())) {
+        for (Explosion explosion : handler.getEntityManager().getExplosions()) {
+            if (boundingRect.intersects(explosion.getBoundingRect())) {
                 pickedUp = true;
                 return true;
             }
