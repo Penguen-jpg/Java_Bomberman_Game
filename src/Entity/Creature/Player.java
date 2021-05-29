@@ -38,10 +38,10 @@ public class Player extends Creature {
         this.id = id;
 
         //設定bounding box
-        boundingRect.x = 22;
+        boundingRect.x = 19;
         boundingRect.y = 30;
-        boundingRect.width = 19;
-        boundingRect.height = 33;
+        boundingRect.width = 25;
+        boundingRect.height = 35;
 
         //設定動畫
         upAnimation = new Animation(150, assets[0]);

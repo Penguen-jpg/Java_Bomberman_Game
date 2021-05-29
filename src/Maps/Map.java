@@ -18,7 +18,7 @@ public class Map {
     private int spawnX2, spawnY2;
     private int tileTypes[][];
     private Tile[][] tiles;
-    private char[][] layout;
+    private String[] layout;
     private Handler handler;
     //entity manager
     private EntityManager entityManager;
@@ -33,6 +33,8 @@ public class Map {
                         , handler.getKeyboardManager(0), AssetManager.player1Animation, 1),
                 new Player(handler, spawnX2, spawnY2
                         , handler.getKeyboardManager(1), AssetManager.player1Animation, 2));
+
+        createBasicLayout("src/res/maps/layout1.txt");
         placeBoxes();
 
         itemManager = new ItemManager(handler);
@@ -60,7 +62,6 @@ public class Map {
 
         tileTypes = new int[width][height];
         tiles = new Tile[width][height];
-        layout = new char[width][height];
 
         //設定tile
         for (int y = 0; y < height; y++) {
@@ -87,50 +88,33 @@ public class Map {
         entityManager.render(graphics);
     }
 
-    //設定要新增的box的位置
-    private void createBasicLayout() {
+    //設定要新增的box的位置(從檔案讀取)
+    private void createBasicLayout(String path) {
         //x:no box here, b:breakable box, u:unbreakable box
-        for (int y = 1; y < height - 1; y++) {
-            for (int x = 1; x < width - 1; x++) {
-                if ((y == 2 || y == 4 || y == 7) && x % 2 == 0) {
-                    layout[x][y] = 'u';
-                } else {
-                    layout[x][y] = 'b';
-                }
-            }
-        }
+        String file = Helper.loadFileAsString(path);
+        layout = file.split("\\s+");
 
-        //排出空格
-        for (int x = 0; x < width; x++) {
-            layout[x][0] = 'x';
-            layout[x][height - 1] = 'x';
-        }
-        for (int y = 1; y < height; y++) {
-            layout[0][y] = 'x';
-            layout[width - 1][y] = 'x';
-        }
-        layout[1][1] = layout[2][1] = layout[5][1] = layout[10][1] = layout[13][1] = 'x';
-        layout[1][2] = layout[13][2] = 'x';
-        layout[1][3] = layout[4][3] = layout[6][3] = layout[8][3] = 'x';
-        layout[5][4] = layout[7][4] = layout[11][4] = 'x';
-        layout[5][6] = layout[6][6] = layout[11][6] = layout[13][6] = 'x';
-        layout[3][7] = layout[9][7] = layout[13][7] = 'x';
-        layout[12][8] = layout[13][8] = 'x';
     }
 
     //擺放box物件
     private void placeBoxes() {
-        createBasicLayout();
-
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (layout[x][y] == 'b') {
+                if (layout[x + y * width].equals("b")) {
                     entityManager.addEntity(new BreakableBox(handler, x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT));
-                } else if (layout[x][y] == 'u') {
+                } else if (layout[x + y * width].equals("u")) {
                     entityManager.addEntity(new UnbreakableBox(handler, x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT));
                 }
             }
         }
+    }
+
+    //是否為solid tile
+    public boolean isSolidTile(int x, int y) {
+        if (x < 0 || y < 0 || x >= width || y >= width) {
+            return Tile.floorTile1.isSolid();
+        }
+        return tiles[x][y].isSolid();
     }
 
     //getters
@@ -140,14 +124,6 @@ public class Map {
 
     public ItemManager getItemManager() {
         return itemManager;
-    }
-
-    public boolean isSolidTile(int x, int y) {
-        if (x < 0 || y < 0 || x >= width || y >= width) {
-            return Tile.floorTile1.isSolid();
-        }
-
-        return tiles[x][y].isSolid();
     }
 
     public int getWidth() {
