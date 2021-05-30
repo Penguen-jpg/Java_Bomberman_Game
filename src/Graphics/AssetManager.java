@@ -31,7 +31,14 @@ public class AssetManager {
         SpriteSheet itemSheet = new SpriteSheet(ImageLoader.loadImage("/textures/item_sheet.png"));
         SpriteSheet buttonSheet = new SpriteSheet(ImageLoader.loadImage("/textures/button_sheet.png"));
 
-        //player
+        //tile
+        breakableBox = entityAndTileSheet.clip(0, 0, TILE_WIDTH, TILE_HEIGHT);
+        unbreakableBox = entityAndTileSheet.clip(TILE_WIDTH, 0, TILE_WIDTH, TILE_HEIGHT);
+        floor1 = entityAndTileSheet.clip(TILE_WIDTH * 2, 0, TILE_WIDTH, TILE_HEIGHT);
+        floor2 = entityAndTileSheet.clip(0, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+        wall = entityAndTileSheet.clip(TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+
+        //player1
         player1Animation = new BufferedImage[5][];
         player1Animation[0] = new BufferedImage[4];
         player1Animation[1] = new BufferedImage[4];
@@ -61,24 +68,47 @@ public class AssetManager {
         player1Animation[4][0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 5, PLAYER_WIDTH, PLAYER_HEIGHT);
         player1Animation[4][1] = entityAndTileSheet.clip(PLAYER_WIDTH, PLAYER_HEIGHT * 5, PLAYER_WIDTH, PLAYER_HEIGHT);
 
-        //tile
-        breakableBox = entityAndTileSheet.clip(0, 0, TILE_WIDTH, TILE_HEIGHT);
-        unbreakableBox = entityAndTileSheet.clip(TILE_WIDTH, 0, TILE_WIDTH, TILE_HEIGHT);
-        floor1 = entityAndTileSheet.clip(TILE_WIDTH * 2, 0, TILE_WIDTH, TILE_HEIGHT);
-        floor2 = entityAndTileSheet.clip(0, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
-        wall = entityAndTileSheet.clip(TILE_WIDTH, TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+        //player2
+        player2Animation = new BufferedImage[5][];
+        player2Animation[0] = new BufferedImage[4];
+        player2Animation[1] = new BufferedImage[4];
+        player2Animation[2] = new BufferedImage[6];
+        player2Animation[3] = new BufferedImage[6];
+        player2Animation[4] = new BufferedImage[2];
+        player2Animation[0][0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 6, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[0][1] = entityAndTileSheet.clip(PLAYER_WIDTH, PLAYER_HEIGHT * 6, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[0][2] = entityAndTileSheet.clip(PLAYER_WIDTH * 2, PLAYER_HEIGHT * 6, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[0][3] = entityAndTileSheet.clip(PLAYER_WIDTH * 3, PLAYER_HEIGHT * 6, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[1][0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 7, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[1][1] = entityAndTileSheet.clip(PLAYER_WIDTH, PLAYER_HEIGHT * 7, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[1][2] = entityAndTileSheet.clip(PLAYER_WIDTH * 2, PLAYER_HEIGHT * 7, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[1][3] = entityAndTileSheet.clip(PLAYER_WIDTH * 3, PLAYER_HEIGHT * 7, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[2][0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 8, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[2][1] = entityAndTileSheet.clip(PLAYER_WIDTH, PLAYER_HEIGHT * 8, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[2][2] = entityAndTileSheet.clip(PLAYER_WIDTH * 2, PLAYER_HEIGHT * 8, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[2][3] = entityAndTileSheet.clip(PLAYER_WIDTH * 3, PLAYER_HEIGHT * 8, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[2][4] = entityAndTileSheet.clip(PLAYER_WIDTH * 4, PLAYER_HEIGHT * 8, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[2][5] = entityAndTileSheet.clip(PLAYER_WIDTH * 5, PLAYER_HEIGHT * 8, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[3][0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 9, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[3][1] = entityAndTileSheet.clip(PLAYER_WIDTH, PLAYER_HEIGHT * 9, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[3][2] = entityAndTileSheet.clip(PLAYER_WIDTH * 2, PLAYER_HEIGHT * 9, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[3][3] = entityAndTileSheet.clip(PLAYER_WIDTH * 3, PLAYER_HEIGHT * 9, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[3][4] = entityAndTileSheet.clip(PLAYER_WIDTH * 4, PLAYER_HEIGHT * 9, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[3][5] = entityAndTileSheet.clip(PLAYER_WIDTH * 5, PLAYER_HEIGHT * 9, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[4][0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 10, PLAYER_WIDTH, PLAYER_HEIGHT);
+        player2Animation[4][1] = entityAndTileSheet.clip(PLAYER_WIDTH, PLAYER_HEIGHT * 10, PLAYER_WIDTH, PLAYER_HEIGHT);
 
         //bomb
         bombAnimation = new BufferedImage[4];
-        bombAnimation[0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 6, BOMB_WIDTH, BOMB_HEIGHT);
-        bombAnimation[1] = entityAndTileSheet.clip(BOMB_WIDTH, PLAYER_HEIGHT * 6, BOMB_WIDTH, BOMB_HEIGHT);
-        bombAnimation[2] = entityAndTileSheet.clip(BOMB_WIDTH * 2, PLAYER_HEIGHT * 6, BOMB_WIDTH, BOMB_HEIGHT);
-        bombAnimation[3] = entityAndTileSheet.clip(BOMB_WIDTH * 3, PLAYER_HEIGHT * 6, BOMB_WIDTH, BOMB_HEIGHT);
+        bombAnimation[0] = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 11, BOMB_WIDTH, BOMB_HEIGHT);
+        bombAnimation[1] = entityAndTileSheet.clip(BOMB_WIDTH, PLAYER_HEIGHT * 11, BOMB_WIDTH, BOMB_HEIGHT);
+        bombAnimation[2] = entityAndTileSheet.clip(BOMB_WIDTH * 2, PLAYER_HEIGHT * 11, BOMB_WIDTH, BOMB_HEIGHT);
+        bombAnimation[3] = entityAndTileSheet.clip(BOMB_WIDTH * 3, PLAYER_HEIGHT * 11, BOMB_WIDTH, BOMB_HEIGHT);
 
         //explosion
-        centralExplosion = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 7, TILE_WIDTH, TILE_HEIGHT);
-        verticalExplosion = entityAndTileSheet.clip(TILE_WIDTH, PLAYER_HEIGHT * 7, TILE_WIDTH, TILE_HEIGHT);
-        horizontalExplosion = entityAndTileSheet.clip(TILE_WIDTH * 2, PLAYER_HEIGHT * 7, TILE_WIDTH, TILE_HEIGHT);
+        centralExplosion = entityAndTileSheet.clip(0, PLAYER_HEIGHT * 12, TILE_WIDTH, TILE_HEIGHT);
+        verticalExplosion = entityAndTileSheet.clip(TILE_WIDTH, PLAYER_HEIGHT * 12, TILE_WIDTH, TILE_HEIGHT);
+        horizontalExplosion = entityAndTileSheet.clip(TILE_WIDTH * 2, PLAYER_HEIGHT * 12, TILE_WIDTH, TILE_HEIGHT);
 
         //item
         powerUp = itemSheet.clip(0, ITEM_HEIGHT * 3, ITEM_WIDTH, ITEM_HEIGHT);

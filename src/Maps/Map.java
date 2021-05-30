@@ -32,7 +32,7 @@ public class Map {
                 new Player(handler, spawnX1, spawnY1
                         , handler.getKeyboardManager(0), AssetManager.player1Animation, 1),
                 new Player(handler, spawnX2, spawnY2
-                        , handler.getKeyboardManager(1), AssetManager.player1Animation, 2));
+                        , handler.getKeyboardManager(1), AssetManager.player2Animation, 2));
 
         createBasicLayout("src/res/maps/layout1.txt");
         placeBoxes();
@@ -45,7 +45,7 @@ public class Map {
         entityManager.setPlayer1(new Player(handler, spawnX1, spawnY1
                 , handler.getKeyboardManager(0), AssetManager.player1Animation, 1));
         entityManager.setPlayer2(new Player(handler, spawnX2, spawnY2
-                , handler.getKeyboardManager(1), AssetManager.player1Animation, 2));
+                , handler.getKeyboardManager(1), AssetManager.player2Animation, 2));
 
         placeBoxes();
     }

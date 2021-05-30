@@ -68,6 +68,10 @@ Intellij IDEA Community Edition 2021.1.1
 2. 修改地圖配置
 3. 修改角色的bounding box
 
+## 更新事項(2021/5/30)
+
+1. 新增玩家2的texture
+
 ---
 
 ## 待完成事項(重要事項基本上處理完畢)
