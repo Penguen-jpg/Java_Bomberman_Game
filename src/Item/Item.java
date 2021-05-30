@@ -98,7 +98,7 @@ public class Item {
         if (type == 0) {
             player.powerUp(1);
         } else if (type == 1) {
-            player.speedUp(0.2f);
+            player.speedUp(0.05f);
         } else if (type == 2) {
             player.ammoUp(1);
         } else if (type == 3) {

@@ -35,14 +35,15 @@ public class BreakableBox extends StaticEntity {
     public void onDestroy() {
         Random random = new Random();
         int drop = random.nextInt(12);
+        System.out.println(drop);
 
-        if (drop >= 3 && drop < 5) {
+        if (drop >= 6 && drop < 8) {
             handler.getItemManager()
                     .addItem(Item.powerUpItem.createItem((int) position.x, (int) position.y));
-        } else if (drop >= 5 && drop < 9) {
+        } else if (drop >= 8 && drop < 10) {
             handler.getItemManager()
                     .addItem(Item.speedUpItem.createItem((int) position.x, (int) position.y));
-        } else if (drop >= 9 && drop < 11) {
+        } else if (drop >= 10 && drop < 11) {
             handler.getItemManager()
                     .addItem(Item.ammoUpItem.createItem((int) position.x, (int) position.y));
         } else if (drop == 12) {
