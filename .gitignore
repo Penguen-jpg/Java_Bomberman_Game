@@ -4,9 +4,6 @@
 # out folder
 out/
 
-# iml files
-*.iml
-
 # Log file
 *.log
 
