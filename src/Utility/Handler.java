@@ -92,7 +92,7 @@ public class Handler {
         keys1.put(KeyEvent.VK_DOWN, Key.down);
         keys1.put(KeyEvent.VK_LEFT, Key.left);
         keys1.put(KeyEvent.VK_RIGHT, Key.right);
-        keys1.put(KeyEvent.VK_SPACE, Key.action);
+        keys1.put(KeyEvent.VK_ENTER, Key.action);
         keys1.put(KeyEvent.VK_ESCAPE, Key.toMenu);
 
         //玩家2的操作方法
@@ -100,7 +100,7 @@ public class Handler {
         keys2.put(KeyEvent.VK_S, Key.down);
         keys2.put(KeyEvent.VK_A, Key.left);
         keys2.put(KeyEvent.VK_D, Key.right);
-        keys2.put(KeyEvent.VK_ENTER, Key.action);
+        keys2.put(KeyEvent.VK_SPACE, Key.action);
 
         keys.add(keys1);
         keys.add(keys2);
