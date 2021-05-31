@@ -35,7 +35,6 @@ public class BreakableBox extends StaticEntity {
     public void onDestroy() {
         Random random = new Random();
         int drop = random.nextInt(12);
-        System.out.println(drop);
 
         if (drop >= 6 && drop < 8) {
             handler.getItemManager()

@@ -50,11 +50,9 @@ public class Item {
             }
         }
         if (handler.getEntityManager().getPlayer1().getCollisionRect(0.0f, 0.0f).intersects(boundingRect)) {
-            System.out.println("Player1 got item");
             itemEffect(handler.getEntityManager().getPlayer1());
             pickedUp = true;
         } else if (handler.getEntityManager().getPlayer2().getCollisionRect(0.0f, 0.0f).intersects(boundingRect)) {
-            System.out.println("Player2 got item");
             itemEffect(handler.getEntityManager().getPlayer2());
             pickedUp = true;
         }

@@ -18,7 +18,7 @@ public class MenuState extends State {
         handler.getMouseManager().setUIManager(uiManager);
 
         //開始按鈕
-        uiManager.addObject(new UIImageButton(302, 438, 128, 64, AssetManager.startButton
+        uiManager.addObject(new UIImageButton(60, 450, 128, 64, AssetManager.startButton
                 , new ClickListener() {
             @Override
             public void onClick() {
@@ -28,7 +28,7 @@ public class MenuState extends State {
         }));
 
         //結束按鈕
-        uiManager.addObject(new UIImageButton(530, 438, 128, 64, AssetManager.exitButton
+        uiManager.addObject(new UIImageButton(230, 450, 128, 64, AssetManager.exitButton
                 , new ClickListener() {
             @Override
             public void onClick() {
@@ -45,6 +45,8 @@ public class MenuState extends State {
 
     @Override
     public void render(Graphics graphics) {
+        //先畫出封面圖片
+        graphics.drawImage(AssetManager.menu, 0, 0, handler.getWidth(), handler.getHeight(), null);
         uiManager.render(graphics);
     }
 
