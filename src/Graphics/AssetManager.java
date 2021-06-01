@@ -11,7 +11,7 @@ public class AssetManager {
     private static final int ITEM_WIDTH = 64, ITEM_HEIGHT = 64;
     private static final int BUTTON_WIDTH = 128, BUTTON_HEIGHT = 64;
     private static final int BOMB_WIDTH = 64, BOMB_HEIGHT = 64;
-    private static final int MENU_WIDTH = 832, MENU_HEIGHT = 640;
+    private static final int MENU_WIDTH = 960, MENU_HEIGHT = 640;
     public static Font font120;
     public static BufferedImage breakableBox, unbreakableBox, floor1, floor2, wall;
     public static BufferedImage[][] player1Animation;
