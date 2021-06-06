@@ -10,6 +10,7 @@ import Utility.Text;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -81,30 +82,34 @@ public class EntityManager {
     }
 
     public void render(Graphics graphics) {
-        for (Entity entity : entities) {
-            entity.render(graphics);
-        }
+        try {
+            for (Entity entity : entities) {
+                entity.render(graphics);
+            }
 
-        for (Bomb bomb : bombs) {
-            bomb.render(graphics);
-        }
+            for (Bomb bomb : bombs) {
+                bomb.render(graphics);
+            }
 
-        for (Explosion explosion : explosions) {
-            explosion.render(graphics);
-        }
+            for (Explosion explosion : explosions) {
+                explosion.render(graphics);
+            }
 
-        if (player1.destroyed) {
-            Text.drawText(graphics, "PLAYER 2 WINS!!!", handler.getGame().getWidth() / 2
-                    , handler.getGame().getHeight() / 4, true, Color.WHITE, AssetManager.font120);
-            Text.drawText(graphics, "PRESS ESC TO BACK TO MENU", handler.getGame().getWidth() / 2
-                    , handler.getGame().getHeight() / 2, true, Color.WHITE, AssetManager.font120);
-            handler.getGame().setGameOver(true);
-        } else if (handler.getEntityManager().getPlayer2().isDestroyed()) {
-            Text.drawText(graphics, "PLAYER 1 WINS!!!", handler.getGame().getWidth() / 2
-                    , handler.getGame().getHeight() / 4, true, Color.WHITE, AssetManager.font120);
-            Text.drawText(graphics, "PRESS ESC TO BACK TO MENU", handler.getGame().getWidth() / 2
-                    , handler.getGame().getHeight() / 2, true, Color.WHITE, AssetManager.font120);
-            handler.getGame().setGameOver(true);
+            if (player1.destroyed) {
+                Text.drawText(graphics, "PLAYER 2 WINS!!!", handler.getGame().getWidth() / 2
+                        , handler.getGame().getHeight() / 4, true, Color.WHITE, AssetManager.font120);
+                Text.drawText(graphics, "PRESS ESC TO BACK TO MENU", handler.getGame().getWidth() / 2
+                        , handler.getGame().getHeight() / 2, true, Color.WHITE, AssetManager.font120);
+                handler.getGame().setGameOver(true);
+            } else if (handler.getEntityManager().getPlayer2().isDestroyed()) {
+                Text.drawText(graphics, "PLAYER 1 WINS!!!", handler.getGame().getWidth() / 2
+                        , handler.getGame().getHeight() / 4, true, Color.WHITE, AssetManager.font120);
+                Text.drawText(graphics, "PRESS ESC TO BACK TO MENU", handler.getGame().getWidth() / 2
+                        , handler.getGame().getHeight() / 2, true, Color.WHITE, AssetManager.font120);
+                handler.getGame().setGameOver(true);
+            }
+        } catch (ConcurrentModificationException e) {
+            return;
         }
     }
 
@@ -122,9 +127,9 @@ public class EntityManager {
 
     //摧毀所有entity
     public void destroyAll() {
-        for (Entity entity : entities) {
-            entity.destroyed = true;
-        }
+        entities.clear();
+        bombs.clear();
+        explosions.clear();
     }
 
     //getters and setters

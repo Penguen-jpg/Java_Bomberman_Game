@@ -35,10 +35,9 @@ public class ItemManager {
         }
     }
 
+    //摧毀所有item
     public void destroyAll() {
-        for (Item item : items) {
-            item.setPickedUp(true);
-        }
+        items.clear();
     }
 
     //加入新的item

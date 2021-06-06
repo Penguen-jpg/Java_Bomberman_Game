@@ -40,7 +40,7 @@ public class Map {
         itemManager = new ItemManager(handler);
     }
 
-    //研究中，可能不會用到
+    //初始化地圖
     public void init() {
         entityManager.setPlayer1(new Player(handler, spawnX1, spawnY1
                 , handler.getKeyboardManager(0), AssetManager.player1Animation, 1));
