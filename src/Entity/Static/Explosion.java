@@ -51,9 +51,6 @@ public abstract class Explosion extends StaticEntity {
         public void render(Graphics graphics) {
             graphics.drawImage(AssetManager.horizontalExplosion, boundingRect.x, boundingRect.y
                     , boundingRect.width, boundingRect.height, null);
-            /*graphics.setColor(Color.BLUE);
-            graphics.fillRect(boundingRect.x, boundingRect.y
-                    , boundingRect.width, boundingRect.height);*/
         }
 
         @Override
@@ -127,9 +124,6 @@ public abstract class Explosion extends StaticEntity {
         public void render(Graphics graphics) {
             graphics.drawImage(AssetManager.verticalExplosion, boundingRect.x, boundingRect.y
                     , boundingRect.width, boundingRect.height, null);
-            /*graphics.setColor(Color.BLUE);
-            graphics.fillRect(boundingRect.x, boundingRect.y
-                    , boundingRect.width, boundingRect.height);*/
         }
 
         @Override
@@ -137,6 +131,7 @@ public abstract class Explosion extends StaticEntity {
 
         }
 
+        //檢查垂直方向的爆炸碰撞
         private float checkVerticalCollision(int yOffset) {
             //爆炸的邊界(從起始點開始算)，用來檢查碰撞
             float bound = position.y;

@@ -24,7 +24,7 @@ public class Player extends Creature {
     private int power;
     private int ammo;
     private int maxAmmo;
-    private boolean pierce;
+    private boolean penetration;
     //避免重複偵測到空白鍵按下
     private long coolDownTimer;
     //紀路放下炸彈的bounding box(目的在於剛放下炸彈時不用做碰撞判定)
@@ -91,7 +91,7 @@ public class Player extends Creature {
         power = 1;
         maxAmmo = 1;
         ammo = maxAmmo;
-        pierce = false;
+        penetration = false;
 
         //設定檢查用變數
         destroyed = false;
@@ -142,13 +142,13 @@ public class Player extends Creature {
 
     //丟下炸彈
     public void dropBomb(int power) {
-        Bomb bomb = new Bomb(handler, this, position.x, position.y, power, pierce);
+        Bomb bomb = new Bomb(handler, this, position.x, position.y, power, penetration);
         //如果在可以放置的位置才放
         if (!bomb.checkBombCollision()) {
             //System.out.println("Bomb pos:" + "(" + bomb.getPosition().x + "," + bomb.getPosition().y + ")");
             bombRect = bomb.getCollisionRect(0.0f, 0.0f);
             justDrop = true;
-            handler.getMap().getEntityManager().addBomb(bomb);
+            handler.getEntityManager().addBomb(bomb);
             ammo--;
         } else {
             //System.out.println("Bomb collides with other entities");
@@ -179,7 +179,7 @@ public class Player extends Creature {
             return false;
         }
 
-        for (Bomb bomb : handler.getMap().getEntityManager().getBombs()) {
+        for (Bomb bomb : handler.getEntityManager().getBombs()) {
             if (bomb.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(xOffset, yOffset))) {
                 //System.out.println("Player collides with bomb");
                 return true;
@@ -202,7 +202,7 @@ public class Player extends Creature {
         ammo = maxAmmo;
     }
 
-    public void setPierce(boolean pierce) {
-        this.pierce = pierce;
+    public void setPenetration(boolean penetration) {
+        this.penetration = penetration;
     }
 }

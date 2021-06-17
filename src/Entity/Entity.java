@@ -38,7 +38,7 @@ public abstract class Entity {
     //檢查是否和其他Entity產生碰撞
     public boolean checkEntityCollision(float xOffset, float yOffset) {
         //檢查entity之間的碰撞
-        for (Entity entity : handler.getMap().getEntityManager().getEntities()) {
+        for (Entity entity : handler.getEntityManager().getEntities()) {
             //不檢查自己
             if (entity.equals(this)) {
                 continue;

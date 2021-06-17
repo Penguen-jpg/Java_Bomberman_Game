@@ -71,11 +71,12 @@ public class Bomb extends StaticEntity {
 
     }
 
+    //引爆炸彈
     private void explode() {
         //水平爆炸
-        handler.getMap().getEntityManager().addExplosion(new Explosion.HorizontalExplosion(handler, this));
+        handler.getEntityManager().addExplosion(new Explosion.HorizontalExplosion(handler, this));
         //垂直爆炸
-        handler.getMap().getEntityManager().addExplosion(new Explosion.VerticalExplosion(handler, this));
+        handler.getEntityManager().addExplosion(new Explosion.VerticalExplosion(handler, this));
         player.restoreAmmo();
         destroyed = true;
     }

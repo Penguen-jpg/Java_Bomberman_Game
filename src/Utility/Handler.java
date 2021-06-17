@@ -87,6 +87,7 @@ public class Handler {
         HashMap<Integer, Key> keys1, keys2;
         keys1 = new HashMap<>();
         keys2 = new HashMap<>();
+
         //玩家1的操作方法
         keys1.put(KeyEvent.VK_UP, Key.up);
         keys1.put(KeyEvent.VK_DOWN, Key.down);

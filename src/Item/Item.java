@@ -100,7 +100,7 @@ public class Item {
         } else if (type == 2) {
             player.ammoUp(1);
         } else if (type == 3) {
-            player.setPierce(true);
+            player.setPenetration(true);
         }
     }
 
