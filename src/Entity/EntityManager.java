@@ -68,6 +68,7 @@ public class EntityManager {
         for (Bomb bomb : bombs) {
             bomb.tick();
             if (bomb.destroyed) {
+                bomb.onDestroy();
                 //CopyOnWriteArrayList不能透過走訪器移除
                 bombs.remove(bomb);
             }

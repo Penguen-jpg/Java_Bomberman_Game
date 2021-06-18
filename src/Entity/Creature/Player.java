@@ -69,11 +69,6 @@ public class Player extends Creature {
     @Override
     public void render(Graphics graphics) {
         graphics.drawImage(getCurrentAnimationFrame(), (int) position.x, (int) position.y, width, height, null);
-
-        //畫出碰撞區域
-        /*graphics.setColor(Color.RED);
-        graphics.fillRect((int)(position.x + boundingRect.x), (int)(position.y + boundingRect.y)
-                , boundingRect.width, boundingRect.height);*/
     }
 
     @Override
@@ -145,13 +140,10 @@ public class Player extends Creature {
         Bomb bomb = new Bomb(handler, this, position.x, position.y, power, penetration);
         //如果在可以放置的位置才放
         if (!bomb.checkBombCollision()) {
-            //System.out.println("Bomb pos:" + "(" + bomb.getPosition().x + "," + bomb.getPosition().y + ")");
             bombRect = bomb.getCollisionRect(0.0f, 0.0f);
             justDrop = true;
             handler.getEntityManager().addBomb(bomb);
             ammo--;
-        } else {
-            //System.out.println("Bomb collides with other entities");
         }
     }
 
@@ -181,7 +173,6 @@ public class Player extends Creature {
 
         for (Bomb bomb : handler.getEntityManager().getBombs()) {
             if (bomb.getCollisionRect(0.0f, 0.0f).intersects(getCollisionRect(xOffset, yOffset))) {
-                //System.out.println("Player collides with bomb");
                 return true;
             }
         }

@@ -22,6 +22,8 @@ public class Bomb extends StaticEntity {
     private boolean penetration;
     //動畫
     private Animation bombAnimation;
+    //是否爆炸了
+    private boolean exploded;
 
 
     public Bomb(Handler handler, Player player, float x, float y, int power, boolean pierce) {
@@ -44,14 +46,22 @@ public class Bomb extends StaticEntity {
         //設定炸彈數值
         this.power = power;
         this.penetration = pierce;
+        exploded = false;
     }
 
     @Override
     public void tick() {
         bombAnimation.tick();
+
+        //被爆炸炸到
+        if(checkCollisionWithExplosion()) {
+            return;
+        }
+
         //計時
         timer = System.currentTimeMillis() - droppedTime;
 
+        //引爆
         if (timer > 2000) {
             explode();
         }
@@ -61,14 +71,14 @@ public class Bomb extends StaticEntity {
     public void render(Graphics graphics) {
         graphics.drawImage(bombAnimation.getCurrentFrame(), (int) position.x, (int) position.y
                 , Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
-        /*graphics.setColor(Color.RED);
-        graphics.fillRect((int) (position.x + boundingRect.x), (int) (position.y + boundingRect.y)
-                , boundingRect.width, boundingRect.height);*/
     }
 
     @Override
     public void onDestroy() {
-
+        //如果被破壞時還沒爆炸
+        if(!exploded) {
+            explode();
+        }
     }
 
     //引爆炸彈
@@ -77,7 +87,9 @@ public class Bomb extends StaticEntity {
         handler.getEntityManager().addExplosion(new Explosion.HorizontalExplosion(handler, this));
         //垂直爆炸
         handler.getEntityManager().addExplosion(new Explosion.VerticalExplosion(handler, this));
+
         player.restoreAmmo();
+        exploded = true;
         destroyed = true;
     }
 
@@ -109,6 +121,11 @@ public class Bomb extends StaticEntity {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isBreakable() {
+        return true;
     }
 
     //getters

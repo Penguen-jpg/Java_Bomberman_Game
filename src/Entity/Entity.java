@@ -53,13 +53,14 @@ public abstract class Entity {
     }
 
     //檢查與爆炸的碰撞
-    protected void checkCollisionWithExplosion() {
+    protected boolean checkCollisionWithExplosion() {
         for (Explosion explosion : handler.getEntityManager().getExplosions()) {
             if (explosion.getBoundingRect().intersects(getCollisionRect(0.0f, 0.0f))) {
                 destroyed = true;
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     //被破壞時做的動作
