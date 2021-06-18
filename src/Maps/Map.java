@@ -30,9 +30,9 @@ public class Map {
         loadMap(path);
         entityManager = new EntityManager(handler,
                 new Player(handler, spawnX1, spawnY1
-                        , handler.getKeyboardManager(0), AssetManager.player1Animation, 1),
+                        , handler.getKeyboardManager(0), AssetManager.player1Animation),
                 new Player(handler, spawnX2, spawnY2
-                        , handler.getKeyboardManager(1), AssetManager.player2Animation, 2));
+                        , handler.getKeyboardManager(1), AssetManager.player2Animation));
 
         createBasicLayout("src/res/maps/layout1.txt");
         placeBoxes();
@@ -43,9 +43,9 @@ public class Map {
     //初始化地圖
     public void init() {
         entityManager.setPlayer1(new Player(handler, spawnX1, spawnY1
-                , handler.getKeyboardManager(0), AssetManager.player1Animation, 1));
+                , handler.getKeyboardManager(0), AssetManager.player1Animation));
         entityManager.setPlayer2(new Player(handler, spawnX2, spawnY2
-                , handler.getKeyboardManager(1), AssetManager.player2Animation, 2));
+                , handler.getKeyboardManager(1), AssetManager.player2Animation));
 
         placeBoxes();
     }

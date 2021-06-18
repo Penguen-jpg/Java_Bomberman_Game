@@ -18,8 +18,6 @@ public class Player extends Creature {
     private Animation leftAnimation;
     private Animation rightAnimation;
     private Animation idleAnimation;
-    //玩家id
-    private int id;
     //炸彈數值
     private int power;
     private int ammo;
@@ -32,10 +30,9 @@ public class Player extends Creature {
     //是否剛丟下炸彈
     private boolean justDrop;
 
-    public Player(Handler handler, float x, float y, KeyboardManager keyboardManager, BufferedImage[][] assets, int id) {
+    public Player(Handler handler, float x, float y, KeyboardManager keyboardManager, BufferedImage[][] assets) {
         super(handler, x, y, DEFAULT_CREATURE_WIDTH, DEFAULT_CREATURE_HEIGHT);
         this.keyboardManager = keyboardManager;
-        this.id = id;
 
         //設定bounding box
         boundingRect.x = 19;
