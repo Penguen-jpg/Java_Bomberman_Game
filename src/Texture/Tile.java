@@ -22,7 +22,7 @@ public class Tile {
     public Tile(BufferedImage texture, int type) {
         this.texture = texture;
         this.type = type;
-        //將tiles[type]指定給呼叫method的tile
+        //將目前的tile存進tiles[type]內
         tiles[type] = this;
     }
 
