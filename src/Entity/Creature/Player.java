@@ -25,7 +25,7 @@ public class Player extends Creature {
     private boolean penetration;
     //避免重複偵測到空白鍵按下
     private long coolDownTimer;
-    //紀路放下炸彈的bounding box(目的在於剛放下炸彈時不用做碰撞判定)
+    //記錄放下炸彈的bounding box(目的在於剛放下炸彈時不用做碰撞判定)
     private Rectangle bombRect;
     //是否剛丟下炸彈
     private boolean justDrop;
